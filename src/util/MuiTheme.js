@@ -77,10 +77,7 @@ export const muiTheme = createTheme({
                     }
                 },
                 {
-                    props: {variant: 'h1'},
-                    style: {
-                        fontSize: '48px'
-                    }
+                    props: {variant: 'h1'}
                 },
                 {
                     props: {variant: 'h2'}
@@ -100,6 +97,13 @@ export const muiTheme = createTheme({
 });
 
 muiTheme.typography.title = {
+    fontSize: '32px',
+    [muiTheme.breakpoints.up('md')]: {
+      fontSize: '48px',
+    },
+};
+
+muiTheme.typography.h1 = {
     fontSize: '32px',
     [muiTheme.breakpoints.up('md')]: {
       fontSize: '48px',
