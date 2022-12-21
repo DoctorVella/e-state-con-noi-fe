@@ -1,6 +1,10 @@
 import { Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material';
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
 const HomePage = () => {
+    const {setOpenLoginModal} = useContext(AuthContext);
+
     return (
         <Grid container rowSpacing={2} columnSpacing={5}>
             <Grid item xs={0} md={2} />
@@ -30,7 +34,7 @@ const HomePage = () => {
                         <Typography variant='h3'>Vuoi accedere alla tua area personale?</Typography>
                     </CardContent>
                     <CardActions>
-                        <Button>Accedi</Button>
+                        <Button onClick={() => { setOpenLoginModal(true); }}>Accedi</Button>
                     </CardActions>
                 </Card>
             </Grid>

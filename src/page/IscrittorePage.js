@@ -1,6 +1,6 @@
 const IscrittorePage = () => {
     return (
-        <>TEST</>
+        <>ISCRITTORE PAGE!</>
     );
 }   
 
