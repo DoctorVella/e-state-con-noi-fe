@@ -7,6 +7,7 @@ import { AuthContextProvider } from './contexts/AuthContext';
 import LoginModal from './components/LoginModal';
 import UserPage from './page/UserPage';
 import { GlobalContextProvider } from './contexts/GlobalContext';
+import Loader from './components/Loader';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
                 <LoginModal />
               </BrowserRouter>
             </Box>
+            <Loader/>
           </div>
         </ThemeProvider>
       </AuthContextProvider>
