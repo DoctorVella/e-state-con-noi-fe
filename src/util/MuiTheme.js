@@ -30,13 +30,13 @@ export const muiTheme = createTheme({
         primary: {
             main: orange
         },
-        darker: {
+        error: {
             main: darkOrange
         },
-        lighter: {
+        info: {
             main: lightOrange
         },
-        lightest: {
+        secondary: {
             main: lightYellow
         }
     },

@@ -1,9 +1,9 @@
 import { Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material';
 import { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import { GlobalContext } from '../contexts/GlobalContext';
 
 const HomePage = () => {
-    const {setOpenLoginModal} = useContext(AuthContext);
+    const {setOpenLoginModal} = useContext(GlobalContext);
 
     return (
         <Grid container rowSpacing={2} columnSpacing={5}>

@@ -4,7 +4,6 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({children}) => {
     const [bearer,setBearer] = useState();
-    const [openLoginModal, setOpenLoginModal] = useState(false);
     const [authLevel, setAuthLevel] = useState();
 
     const isAdmin = () => {
@@ -20,8 +19,6 @@ export const AuthContextProvider = ({children}) => {
         setBearer,
         authLevel,
         setAuthLevel,
-        openLoginModal,
-        setOpenLoginModal,
         isAdmin,
         isIscrittore
     }}>

@@ -1,14 +1,15 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from "@mui/material";
-import { useContext } from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from "@mui/material";
+import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { AuthContext } from "../contexts/AuthContext";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import useAuthActions from "../services/useAuthActions";
+import { GlobalContext } from "../contexts/GlobalContext";
 
 const LoginModal = () => {
-    const { openLoginModal, setOpenLoginModal } = useContext(AuthContext);
+    const { openLoginModal, setOpenLoginModal } = useContext(GlobalContext);
+    const [isError, setIsError] = useState(false);
     const navigate = useNavigate();
     const authActions = useAuthActions();
 
@@ -22,16 +23,21 @@ const LoginModal = () => {
         password: Yup.string().required("obbligatorio")
     })
 
-    const { handleSubmit, control } = useForm({
+    const { handleSubmit, control, reset } = useForm({
         defaultValues: initialValues,
         resolver: yupResolver(validationSchema)
     })
 
-    const onSubmit = (values) => {
-        console.log(values);
-        authActions.login(values);
-        setOpenLoginModal(false);
-        navigate("/user");
+    const onSubmit = async (values) => {
+        let isAuthenticated = await authActions.login(values);
+        if(isAuthenticated) {
+            setIsError(false);
+            setOpenLoginModal(false);
+            navigate("/user");
+            reset();
+        }else {
+            setIsError(true);
+        }
     }
 
     return (
@@ -39,9 +45,17 @@ const LoginModal = () => {
             <DialogTitle>
                 Inserisci le credenziali!
             </DialogTitle>
-            <form>
+            <form style={{width: "400px"}}>
                 <DialogContent>
                     <Grid container spacing={2}>
+                        {isError ?
+                            <Grid item xs={12}>
+                                <Typography color="error">
+                                    Credenziali errate! Riprova<br/>
+                                    (se non sei registrato, <span style={{color: "blue", textDecoration: "underline"}} onClick={() => {console.log("CLICK!")}}>Registrati</span>.)
+                                </Typography>
+                            </Grid> : <></>
+                        }
                         <Grid item xs={12}>
                             <Controller
                                 control={control}
@@ -76,7 +90,11 @@ const LoginModal = () => {
                     </Grid>
                 </DialogContent>
                 <DialogActions style={{ justifyContent: "space-between" }}>
-                    <Button variant="outlined" onClick={() => { setOpenLoginModal(false); }}>Chiudi</Button>
+                    <Button variant="outlined" onClick={() => { 
+                        setOpenLoginModal(false); 
+                        reset();
+                        setIsError(false);
+                    }}>Chiudi</Button>
                     <Button variant="contained" onClick={handleSubmit(onSubmit)}>Invia</Button>
                 </DialogActions>
             </form>
