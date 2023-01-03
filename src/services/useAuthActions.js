@@ -15,18 +15,35 @@ const useAuthActions = () => {
         try {
             setLoading(true);
             let res = await axiosInstance.put("/login", data);
-            setBearer(res.data.bearer);
-            setAuthLevel(res.data.authLevel);
+            localStorage.setItem("bearer",res.data.bearer);
+            localStorage.setItem("authLevel",res.data.authLevel);
             setLoading(false);
             return true;
         } catch (e) {
             setLoading(false);
+            console.log(e);
+            return false;
+        }
+    }
+
+    const register = async (data) => {
+        try {
+            setLoading(true);
+            let res = await axiosInstance.post("/register", data);
+            localStorage.setItem("bearer",res.data.bearer);
+            localStorage.setItem("authLevel",res.data.authLevel);
+            setLoading(false);
+            return true;
+        } catch (e) {
+            setLoading(false);
+            console.log(e);
             return false;
         }
     }
 
     return {
-        login
+        login,
+        register
     };
 }
 

@@ -8,6 +8,7 @@ import LoginModal from './components/LoginModal';
 import UserPage from './page/UserPage';
 import { GlobalContextProvider } from './contexts/GlobalContext';
 import Loader from './components/Loader';
+import RegisterModal from './components/RegisterModal';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
                   <Route path="/" element={<HomePage />} />
                 </Routes>
                 <LoginModal />
+                <RegisterModal />
               </BrowserRouter>
             </Box>
             <Loader/>
