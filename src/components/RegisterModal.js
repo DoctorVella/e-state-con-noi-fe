@@ -1,20 +1,17 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import useAuthActions from "../services/useAuthActions";
-import { Navigate, redirect, useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const RegisterModal = () => {
     const {openRegisterModal, setOpenRegisterModal} = useContext(GlobalContext);
     const navigate = useNavigate();
     const authActions = useAuthActions();
     const [isError, setIsError] = useState(false);
-    const [isRegistered, setIsRegistered] = useState(false);
-    const [fetch,setFetch] = useState(0);
 
     const initialValues = {
         username: "",
@@ -39,24 +36,13 @@ const RegisterModal = () => {
 
     const onSubmit = async (values) => {
         let isRegistered = await authActions.register(values);
-        setIsRegistered(isRegistered);
         setIsError(!isRegistered);
         if(isRegistered) {
-            
-            
+            navigate("/user");
             setOpenRegisterModal(false);
             reset();
-            setFetch(fetch+1);
         }
     }
-
-    // useEffect(() => {
-    //     if(isRegistered) {
-    //         console.log("HERE 2")
-    //         redirect("/user");
-
-    //     }  
-    // },[fetch])
 
     return (
         <Dialog open={openRegisterModal}>

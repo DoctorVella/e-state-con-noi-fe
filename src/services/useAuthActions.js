@@ -1,10 +1,8 @@
 import axios from "axios";
 import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
 import { GlobalContext } from "../contexts/GlobalContext";
 
 const useAuthActions = () => {
-    const { setBearer, setAuthLevel } = useContext(AuthContext);
     const { setLoading } = useContext(GlobalContext);
 
     const axiosInstance = axios.create({
