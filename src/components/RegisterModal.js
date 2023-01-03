@@ -25,8 +25,14 @@ const RegisterModal = () => {
         username: Yup.string().required("obbligatorio"),
         name: Yup.string().required("obbligatorio"),
         surname: Yup.string().required("obbligatorio"),
-        password: Yup.string().required("obbligatorio"),
-        confirmPassword: Yup.string().required("obbligatorio")
+        password: Yup.string().required("obbligatorio").test("password","Password non corrispondenti", (value, context) => {
+            const {confirmPassword} = context?.parent;
+            return value === confirmPassword;
+        }),
+        confirmPassword: Yup.string().required("obbligatorio").test("confirmPassword","Password non corrispondenti", (value, context) => {
+            const {password} = context?.parent;
+            return value === password;
+        })
     })
 
     const { handleSubmit, control, reset } = useForm({

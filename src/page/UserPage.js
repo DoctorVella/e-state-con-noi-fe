@@ -1,6 +1,11 @@
+import AdminPage from "./AdminPage";
+import IscrittorePage from "./IscrittorePage";
+
 const UserPage = () => {
 
-    return (<>TEST</>);
+    return (<>
+        {localStorage.getItem("authLevel") === "ADMIN" ? <AdminPage/> : <IscrittorePage/>}
+    </>);
 }
 
 export default UserPage;
