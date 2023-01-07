@@ -7,7 +7,7 @@ const useAuthActions = () => {
 
     const axiosInstance = axios.create({
         baseURL: process.env.REACT_APP_BE_BASEURL
-    })
+    });
 
     const login = async (data) => {
         try {
@@ -22,7 +22,7 @@ const useAuthActions = () => {
             console.log(e);
             return false;
         }
-    }
+    };
 
     const register = async (data) => {
         try {
@@ -37,7 +37,7 @@ const useAuthActions = () => {
             console.log(e);
             return false;
         }
-    }
+    };
 
     return {
         login,
