@@ -23,8 +23,22 @@ const usePlayerActions = () => {
         }
     }
 
+    const findPlayer = async () => {
+        try {
+            setLoading(true);
+            let res = await axiosInstance.get("/find-player");
+            setLoading(false);
+            return res.data;
+        }catch (e) {
+            setLoading(false);
+            console.log(e);
+            return false;
+        }
+    }
+
     return {
-        insertPlayer
+        insertPlayer,
+        findPlayer
     };
 }
 

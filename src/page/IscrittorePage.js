@@ -1,6 +1,7 @@
 import { Button, Card, CardActions, CardContent, Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import NewPlayerModal from "../components/NewPlayerModal";
+import ViewPlayerModal from "../components/ViewPlayerModal";
 
 const IscrittorePage = () => {
     const [openNewPlayerModal, setOpenNewPlayerModal] = useState(false);
@@ -33,6 +34,7 @@ const IscrittorePage = () => {
                 <Grid item xs={0} md={2} />
             </Grid>
             <NewPlayerModal open={openNewPlayerModal} setOpen={setOpenNewPlayerModal} />
+            <ViewPlayerModal open={openViewPlayersModal} setOpen={setOpenViewPlayersModal} />
         </>
     );
 }   
