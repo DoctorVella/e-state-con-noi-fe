@@ -8,6 +8,7 @@ import UserPage from './page/UserPage';
 import { GlobalContextProvider } from './contexts/GlobalContext';
 import Loader from './components/Loader';
 import RegisterModal from './components/RegisterModal';
+import ClientCallFailedModal from './components/ClientCallFailedModal';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
                 </Routes>
                 <LoginModal />
                 <RegisterModal />
+                <ClientCallFailedModal />
               </BrowserRouter>
             </Box>
             <Loader/>

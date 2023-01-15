@@ -3,11 +3,19 @@ import { useContext } from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
 
 const useAuthActions = () => {
-    const { setLoading } = useContext(GlobalContext);
+    const { setLoading, setOpenClientCallFailedModal } = useContext(GlobalContext);
 
     const axiosInstance = axios.create({
         baseURL: process.env.REACT_APP_BE_BASEURL
     });
+
+    axiosInstance.interceptors.response.use(res => { return res; }, err => {
+        const res = err.response;
+        if(res?.status !== 401) {
+            setOpenClientCallFailedModal(true);
+        }
+        throw err;
+    })
 
     const login = async (data) => {
         try {

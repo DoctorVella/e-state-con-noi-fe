@@ -7,7 +7,7 @@ const usePlayerActions = () => {
     const insertPlayer = async (data) => {
         try {
             setLoading(true);
-            let res = await axiosInstance.post("/insert-player", data);
+            await axiosInstance.post("/insert-player", data);
             setLoading(false);
             return true;
         } catch (e) {

@@ -9,6 +9,7 @@ export const GlobalContextProvider = ({children}) => {
     const [loading, setLoading] = useState(false);
     const [openRegisterModal, setOpenRegisterModal] = useState(false);
     const [sessionState, setSessionState] = useState(SESSION_TO_INIT);
+    const [openClientCallFailedModal, setOpenClientCallFailedModal] = useState(false);
 
     const axiosInstance = axios.create({
         baseURL: process.env.REACT_APP_BE_BASEURL,
@@ -17,9 +18,11 @@ export const GlobalContextProvider = ({children}) => {
 
     axiosInstance.interceptors.response.use(res => { return res; }, err => {
         const res = err.response;
-        if(res.status === 401) {
+        if(res?.status === 401) {
             setSessionState(SESSION_EXPIRED);
             setOpenLoginModal(true);
+        } else {
+            setOpenClientCallFailedModal(true);
         }
         throw err;
     })
@@ -33,7 +36,9 @@ export const GlobalContextProvider = ({children}) => {
         openLoginModal,
         setOpenLoginModal,
         openRegisterModal,
-        setOpenRegisterModal
+        setOpenRegisterModal,
+        openClientCallFailedModal,
+        setOpenClientCallFailedModal
     }}>
         {children}
     </GlobalContext.Provider>
