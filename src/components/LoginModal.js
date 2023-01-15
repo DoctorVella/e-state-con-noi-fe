@@ -6,9 +6,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import useAuthActions from "../services/useAuthActions";
 import { GlobalContext } from "../contexts/GlobalContext";
+import { SESSION_EXPIRED, SESSION_OK } from "../util/Constants";
 
 const LoginModal = () => {
-    const { openLoginModal, setOpenLoginModal, setOpenRegisterModal } = useContext(GlobalContext);
+    const { 
+        openLoginModal, 
+        setOpenLoginModal, 
+        setOpenRegisterModal, 
+        sessionState, 
+        setSessionState 
+    } = useContext(GlobalContext);
     const [isError, setIsError] = useState(false);
     const navigate = useNavigate();
     const authActions = useAuthActions();
@@ -33,6 +40,7 @@ const LoginModal = () => {
         setIsError(!isAuthenticated);
         if(isAuthenticated) {
             navigate("/user");
+            setSessionState(SESSION_OK);
             setOpenLoginModal(false);
             reset();
         }
@@ -41,7 +49,12 @@ const LoginModal = () => {
     return (
         <Dialog open={openLoginModal}>
             <DialogTitle>
-                Inserisci le credenziali!
+                {sessionState === SESSION_EXPIRED ? 
+                <span>
+                    SESSIONE SCADUTA:<br/> Inserisci nuovamente le credenziali!
+                </span> : <span>
+                    Inserisci le credenziali!
+                </span>}
             </DialogTitle>
             <form style={{width: "400px"}} onSubmit={ handleSubmit(onSubmit) }>
                 <DialogContent>

@@ -1,0 +1,3 @@
+export const SESSION_EXPIRED = "SESSION_EXPIRED";
+export const SESSION_TO_INIT = "SESSION_TO_INIT";
+export const SESSION_OK = "SESSION_OK";

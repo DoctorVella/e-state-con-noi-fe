@@ -34,12 +34,13 @@ const NewPlayerModal = ({ open, setOpen }) => {
     })
 
     const onSubmit = async (values) => {
-        console.log("HERE")
         let isSuccess = await playerActions.insertPlayer(values);
         if (isSuccess) {
             setOpen(false);
             reset();
             setOpenSuccessModal(true);
+        } else {
+            setOpen(false);
         }
     }
 

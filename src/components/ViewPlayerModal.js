@@ -8,7 +8,12 @@ const ViewPlayerModal = ({ open, setOpen }) => {
     const playerActions = usePlayerActions();
 
     const fetchPlayers = async () => {
-        setPlayers(await playerActions.findPlayer());
+        let player = await playerActions.findPlayer();
+        if(player) {
+            setPlayers(player);
+        } else {
+            setOpen(false);
+        }
     }
 
     useEffect(() => {
