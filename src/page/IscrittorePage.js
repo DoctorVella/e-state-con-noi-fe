@@ -37,6 +37,6 @@ const IscrittorePage = () => {
             <ViewPlayerModal open={openViewPlayersModal} setOpen={setOpenViewPlayersModal} />
         </>
     );
-}   
+}
 
 export default IscrittorePage;

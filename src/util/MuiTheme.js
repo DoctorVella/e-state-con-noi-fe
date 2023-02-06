@@ -62,6 +62,19 @@ export const muiTheme = createTheme({
                 }
             }
         },
+        MuiTable: {
+            defaultProps: {
+                bgcolor: lightOrange
+            }
+        },
+        MuiTableCell: {
+            defaultProps: {
+                style: {
+                    fontSize: '18px',
+                    color: darkOrange
+                }
+            }
+        },
         MuiTypography: {
             defaultProps: {
                 fontWeight: '700',
