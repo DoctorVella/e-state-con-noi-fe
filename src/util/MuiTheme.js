@@ -75,6 +75,22 @@ export const muiTheme = createTheme({
                 }
             }
         },
+        MuiDataGrid: {
+            defaultProps: {
+                style: {
+                    fontSize: '18px',
+                    backgroundColor: lightOrange,
+                    color: darkOrange
+                }
+            }
+        },
+        MuiTablePagination: {
+            defaultProps: {
+                style: {
+                    color: darkOrange
+                }
+            }
+        },
         MuiTypography: {
             defaultProps: {
                 fontWeight: '700',

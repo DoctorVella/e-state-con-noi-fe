@@ -1,7 +1,8 @@
 import { Info } from "@mui/icons-material";
-import { Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Grid, IconButton, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import usePlayerActions from "../services/usePlayerActions";
+import { DataGrid } from "@mui/x-data-grid";
 
 const AdminPage = () => {
     const { findPlayer } = usePlayerActions();
@@ -25,7 +26,31 @@ const AdminPage = () => {
         setShownPlayers(players.filter(p => (p.name + " " + p.surname).includes(searchInput)))
     },[searchInput])
 
- //TODO passa a DataGrid
+    const columns = [
+        {
+            field: "name",
+            headerName: "Nome",
+            valueGetter: (params) => {return params.row.name + " " + params.row.surname},
+            flex: 2
+        },
+        {
+            field: "age",
+            headerName: "Età",
+            flex: 1
+        },
+        {
+            field: "team",
+            headerName: "Squadra",
+            valueGetter: (params) => {return params.row.team ? params.row.team : "N/A"},
+            flex: 1
+        },
+        {
+            field: "action",
+            headerName: "Azioni",
+            renderCell: (params) => {return <IconButton color="primary"><Info/></IconButton>},
+            flex: 1
+        }
+    ]
 
     return (
         <>
@@ -43,34 +68,22 @@ const AdminPage = () => {
                 <Grid item xs={0} md={2} />
                 <Grid item xs={0} md={2} />
                 <Grid item xs={12} md={8}>
-                    <TableContainer component={Paper}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Nome</TableCell>
-                                    <TableCell>Età</TableCell>
-                                    <TableCell>Squadra</TableCell>
-                                    <TableCell>Azioni</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {shownPlayers && shownPlayers.length > 0 ?
-                                    shownPlayers?.map((p) => (
-                                        <TableRow key={p._id}>
-                                            <TableCell>{p.name} {p.surname}</TableCell>
-                                            <TableCell>{p.age}</TableCell>
-                                            <TableCell>{p.team ? p.team : "N/A"}</TableCell>
-                                            <TableCell>
-                                                <IconButton color="primary"><Info/></IconButton>
-                                            </TableCell>
-                                        </TableRow>
-                                    )) : <TableRow>
-                                        <TableCell>Nessun giocatore trovato</TableCell>
-                                    </TableRow>
-                                }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                    <DataGrid 
+                        columns={columns}
+                        rows={shownPlayers}
+                        getRowId={r => r._id}
+                        autoHeight
+                        localeText={{
+                            noRowsLabel: 'Nessun Giocatore Trovato',
+                            labelRowsPerPage: 'test'
+                        }}
+                        componentsProps={{
+                            pagination: {
+                              labelRowsPerPage: "Righe per pagina",
+                              labelDisplayedRows: (({from,to,count,page}) => {return from + "-" + to + " di " + count})
+                            }
+                        }}
+                        />
                 </Grid>
                 <Grid item xs={0} md={2} />
             </Grid>
