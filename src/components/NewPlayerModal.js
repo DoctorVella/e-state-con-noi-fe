@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, MenuItem, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, MenuItem, TextField, useMediaQuery, useTheme } from "@mui/material";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
@@ -9,6 +9,8 @@ import { useState } from "react";
 const NewPlayerModal = ({ open, setOpen }) => {
     const playerActions = usePlayerActions();
     const [openSuccessModal, setOpenSuccessModal] = useState(false);
+    const theme = useTheme();
+    const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
     const initialValues = {
         name: "",
@@ -50,7 +52,7 @@ const NewPlayerModal = ({ open, setOpen }) => {
                 <DialogTitle>
                     Inserisci i dati del partecipante!
                 </DialogTitle>
-                <form style={{ width: "400px" }} onSubmit={handleSubmit(onSubmit)}>
+                <form style={{ width: isLargeScreen ? "400px" : "300px" }} onSubmit={handleSubmit(onSubmit)}>
                     <DialogContent>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>

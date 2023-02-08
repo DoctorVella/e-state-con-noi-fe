@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
 import * as Yup from "yup";
@@ -12,6 +12,8 @@ const RegisterModal = () => {
     const navigate = useNavigate();
     const authActions = useAuthActions();
     const [isError, setIsError] = useState(false);
+    const theme = useTheme();
+    const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
     const initialValues = {
         username: "",
@@ -55,7 +57,7 @@ const RegisterModal = () => {
             <DialogTitle>
                 Crea il tuo utente!
             </DialogTitle>
-            <form style={{width: "400px"}} onSubmit={ handleSubmit(onSubmit) }>
+            <form style={{width: isLargeScreen ? "400px" : "300px"}} onSubmit={ handleSubmit(onSubmit) }>
                 <DialogContent>
                     <Grid container spacing={2}>
                         {isError ?

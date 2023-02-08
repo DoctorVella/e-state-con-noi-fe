@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as Yup from "yup";
@@ -19,6 +19,8 @@ const LoginModal = () => {
     const [isError, setIsError] = useState(false);
     const navigate = useNavigate();
     const authActions = useAuthActions();
+    const theme = useTheme();
+    const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
     const initialValues = {
         username: "",
@@ -56,7 +58,7 @@ const LoginModal = () => {
                     Inserisci le credenziali!
                 </span>}
             </DialogTitle>
-            <form style={{width: "400px"}} onSubmit={ handleSubmit(onSubmit) }>
+            <form style={{width: isLargeScreen ? "400px" : "300px"}} onSubmit={ handleSubmit(onSubmit) }>
                 <DialogContent>
                     <Grid container spacing={2}>
                         {isError ?

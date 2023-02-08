@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import usePlayerActions from "../services/usePlayerActions";
 import ExpandMore from "@mui/icons-material/ExpandMore";
@@ -6,6 +6,8 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 const ViewPlayerModal = ({ open, setOpen }) => {
     const [players, setPlayers] = useState([]);
     const playerActions = usePlayerActions();
+    const theme = useTheme();
+    const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
     const fetchPlayers = async () => {
         let player = await playerActions.findPlayer();
@@ -27,7 +29,7 @@ const ViewPlayerModal = ({ open, setOpen }) => {
             <DialogTitle>
                 Ecco i partecipanti che hai iscritto:
             </DialogTitle>
-            <DialogContent style={{ width: "400px" }}>
+            <DialogContent style={{ width: isLargeScreen ? "400px" : "300px" }}>
                 {players && players.length > 0 ?
                     players?.map(p => <Accordion key={p._id}>
                         <AccordionSummary expandIcon={<ExpandMore />}>

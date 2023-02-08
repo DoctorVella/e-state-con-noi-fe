@@ -1,5 +1,5 @@
-import { Info } from "@mui/icons-material";
-import { Grid, IconButton, TextField, useMediaQuery, useTheme } from "@mui/material";
+import { Add, Info } from "@mui/icons-material";
+import { Button, Grid, IconButton, TextField, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import usePlayerActions from "../services/usePlayerActions";
 import { DataGrid } from "@mui/x-data-grid";
@@ -72,9 +72,9 @@ const AdminPage = () => {
 
     return (
         <>
-            <Grid container rowSpacing={2} columnSpacing={5}>
+            <Grid container rowSpacing={2} columnSpacing={2}>
                 <Grid item xs={0} md={2} />
-                <Grid item xs={12} md={8} >
+                <Grid item xs={12} md={7} >
                     <TextField 
                         fullWidth
                         variant="outlined"
@@ -83,7 +83,12 @@ const AdminPage = () => {
                         onChange={(e) => {setSearchInput(e.target.value)}}
                     />
                 </Grid>
-                <Grid item xs={0} md={2} />
+                <Grid item xs={12} md={1} >
+                    <Button fullWidth sx={{height: '100%'}}>
+                        <Add />
+                    </Button>
+                </Grid>
+                <Grid item xs={1} md={2} />
                 <Grid item xs={0} md={2} />
                 <Grid item xs={12} md={8}>
                     <DataGrid 
