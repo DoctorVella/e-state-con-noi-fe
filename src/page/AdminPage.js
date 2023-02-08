@@ -1,5 +1,5 @@
 import { Info } from "@mui/icons-material";
-import { Grid, IconButton, TextField } from "@mui/material";
+import { Grid, IconButton, TextField, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import usePlayerActions from "../services/usePlayerActions";
 import { DataGrid } from "@mui/x-data-grid";
@@ -9,6 +9,9 @@ const AdminPage = () => {
     const [players, setPlayers] = useState([]);
     const [shownPlayers, setShownPlayers] = useState([]);
     const [searchInput, setSearchInput] = useState("");
+    const [pageSize, setPageSize] = useState(10);
+    const theme = useTheme();
+    const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
     const fetchPlayers = async () => {
         let res = await findPlayer();
@@ -26,7 +29,7 @@ const AdminPage = () => {
         setShownPlayers(players.filter(p => (p.name + " " + p.surname).includes(searchInput)))
     },[searchInput])
 
-    const columns = [
+    const mdColumns = [
         {
             field: "name",
             headerName: "Nome",
@@ -43,6 +46,21 @@ const AdminPage = () => {
             headerName: "Squadra",
             valueGetter: (params) => {return params.row.team ? params.row.team : "N/A"},
             flex: 1
+        },
+        {
+            field: "action",
+            headerName: "Azioni",
+            renderCell: (params) => {return <IconButton color="primary"><Info/></IconButton>},
+            flex: 1
+        }
+    ]
+
+    const xsColumns = [
+        {
+            field: "name",
+            headerName: "Nome",
+            valueGetter: (params) => {return params.row.name + " " + params.row.surname},
+            flex: 2
         },
         {
             field: "action",
@@ -69,7 +87,7 @@ const AdminPage = () => {
                 <Grid item xs={0} md={2} />
                 <Grid item xs={12} md={8}>
                     <DataGrid 
-                        columns={columns}
+                        columns={isLargeScreen ? mdColumns : xsColumns}
                         rows={shownPlayers}
                         getRowId={r => r._id}
                         autoHeight
@@ -77,6 +95,9 @@ const AdminPage = () => {
                             noRowsLabel: 'Nessun Giocatore Trovato',
                             labelRowsPerPage: 'test'
                         }}
+                        pageSize={pageSize}
+                        onPageSizeChange={(newPageSize) => {setPageSize(newPageSize)}}
+                        rowsPerPageOptions={[5,10,20]}
                         componentsProps={{
                             pagination: {
                               labelRowsPerPage: "Righe per pagina",
