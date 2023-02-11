@@ -2,6 +2,10 @@ export const SESSION_EXPIRED = "SESSION_EXPIRED";
 export const SESSION_TO_INIT = "SESSION_TO_INIT";
 export const SESSION_OK = "SESSION_OK";
 
+export const AUTH_LEVEL_ADMIN = "ADMIN";
+export const AUTH_LEVEL_ANIMATORE = "ANIMATORE";
+export const AUTH_LEVEL_ISCRITTORE = "ISCRITTORE";
+
 export const PLAYER_PAGE_CREATE_MODE = "CREATE";
 export const PLAYER_PAGE_UPDATE_MODE = "UPDATE";
 export const PLAYER_PAGE_VIEW_MODE = "VIEW";

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
+import NewPlayerSuccessModal from "../components/NewPlayerSuccessModal";
 import usePlayerActions from "../services/usePlayerActions";
 import { DEFAULT_1W_BROTHER, DEFAULT_1W_STANDARD, DEFAULT_2W_BROTHER, DEFAULT_2W_STANDARD, PLAYER_PAGE_CREATE_MODE, PLAYER_PAGE_UPDATE_MODE, PLAYER_PAGE_VIEW_MODE } from "../util/Constants";
 
@@ -13,6 +14,7 @@ const PlayerPage = ({ mode }) => {
     const [currentMode, setCurrentMode] = useState(mode);
     const playerActions = usePlayerActions();
     const {_id} = useParams();
+    const [openSuccessModal, setOpenSuccessModal] = useState(false);
 
     const getPageDescription = () => {
         if(currentMode === PLAYER_PAGE_CREATE_MODE) {
@@ -29,6 +31,14 @@ const PlayerPage = ({ mode }) => {
             return <Button fullWidth variant="contained" onClick={() => {setCurrentMode(PLAYER_PAGE_UPDATE_MODE)}}>Modifica</Button>
         }else{
             return <Button fullWidth variant="contained" type="submit">Invia</Button>
+        }
+    }
+
+    const getPageSecondaryButton = () => {
+        if(currentMode === PLAYER_PAGE_VIEW_MODE) {
+            return <Button fullWidth variant="outlined">Elimina</Button> //TODO onclick
+        }else{
+            return <Button fullWidth variant="outlined" onClick={() => {reset();}}>Svuota</Button>
         }
     }
 
@@ -71,26 +81,19 @@ const PlayerPage = ({ mode }) => {
         reset(res[0]);
     }
 
-    // const initForm = async () => {
-    //     if(currentMode !== PLAYER_PAGE_CREATE_MODE){
-    //         let player = await playerActions.findPlayerAsAnimatore(_id);
-    //         reset(player);
-    //     }else{
-    //         reset(initialValues);
-    //     }
-    // }
-
     useEffect(() => {
         if(currentMode !== PLAYER_PAGE_CREATE_MODE){
             fetchPlayers();
         }
-        // initForm();
     },[])
 
     const onSubmit = async (values) => {
         if(currentMode === PLAYER_PAGE_CREATE_MODE) {
-            await playerActions.insertPlayerAsAnimatore(values);
-            //TODO
+            let res = await playerActions.insertPlayerAsAnimatore(values);
+            if(res) {
+                setCurrentMode(PLAYER_PAGE_VIEW_MODE);
+                setOpenSuccessModal(true);
+            }
         }else{
             //TODO
         }
@@ -336,7 +339,7 @@ const PlayerPage = ({ mode }) => {
                 <Grid item xs={0} md={2} />
                 <Grid item xs={0} md={2} />
                 <Grid item xs={5} md={4} >
-                    <Button fullWidth variant="outlined" onClick={() => {reset();}}>Svuota</Button>
+                    {getPageSecondaryButton()}
                 </Grid>
                 <Grid item xs={5} md={4} >
                     {getPageMainButton()}
@@ -344,6 +347,7 @@ const PlayerPage = ({ mode }) => {
                 <Grid item xs={0} md={2} />
             </Grid>
         </form>
+        <NewPlayerSuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
     </>
 }
 
