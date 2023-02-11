@@ -55,6 +55,21 @@ export const muiTheme = createTheme({
                 }
             ]
         },
+        MuiIconButton: {
+            variants: [
+                {
+                    props: {variant: 'filled'},
+                    style: {
+                        color: 'white',
+                        backgroundColor: orange,
+                        ":hover": {
+                            backgroundColor: orange,
+                            filter: "brightness(80%)"
+                        }
+                    }
+                }
+            ]
+        },
         MuiCardActions: {
             defaultProps: {
                 style: {

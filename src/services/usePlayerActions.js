@@ -30,9 +30,37 @@ const usePlayerActions = () => {
         }
     }
 
+    const insertPlayerAsAnimatore = async (data) => {
+        try {
+            setLoading(true);
+            await axiosInstance.post("/insert-player-as-animatore", data);
+            setLoading(false);
+            return true;
+        } catch (e) {
+            setLoading(false);
+            console.log(e);
+            return false;
+        }
+    }
+
+    const findPlayerAsAnimatore = async (_id) => {
+        try {
+            setLoading(true);
+            let res = await axiosInstance.get("/find-player",{params:{_id: _id}});
+            setLoading(false);
+            return res.data;
+        }catch (e) {
+            setLoading(false);
+            console.log(e);
+            return false;
+        }
+    }
+
     return {
         insertPlayer,
-        findPlayer
+        findPlayer,
+        insertPlayerAsAnimatore,
+        findPlayerAsAnimatore
     };
 }
 

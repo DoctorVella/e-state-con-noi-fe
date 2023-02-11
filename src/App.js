@@ -9,6 +9,8 @@ import { GlobalContextProvider } from './contexts/GlobalContext';
 import Loader from './components/Loader';
 import RegisterModal from './components/RegisterModal';
 import ClientCallFailedModal from './components/ClientCallFailedModal';
+import PlayerPage from './page/PlayerPage';
+import { PLAYER_PAGE_CREATE_MODE, PLAYER_PAGE_VIEW_MODE } from './util/Constants';
 
 function App() {
 
@@ -24,6 +26,8 @@ function App() {
               <BrowserRouter>
                 <Routes>
                   <Route path="/user" element={<UserPage />} />
+                  <Route path="/create" element={<PlayerPage mode={PLAYER_PAGE_CREATE_MODE} />} />
+                  <Route path="/view/:_id" element={<PlayerPage mode={PLAYER_PAGE_VIEW_MODE} />} />
                   <Route path="/" element={<HomePage />} />
                 </Routes>
                 <LoginModal />

@@ -3,6 +3,7 @@ import { Button, Grid, IconButton, TextField, useMediaQuery, useTheme } from "@m
 import { useEffect, useState } from "react";
 import usePlayerActions from "../services/usePlayerActions";
 import { DataGrid } from "@mui/x-data-grid";
+import { useNavigate } from "react-router-dom";
 
 const AdminPage = () => {
     const { findPlayer } = usePlayerActions();
@@ -12,6 +13,7 @@ const AdminPage = () => {
     const [pageSize, setPageSize] = useState(10);
     const theme = useTheme();
     const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'));
+    const navigate = useNavigate();
 
     const fetchPlayers = async () => {
         let res = await findPlayer();
@@ -50,7 +52,7 @@ const AdminPage = () => {
         {
             field: "action",
             headerName: "Azioni",
-            renderCell: (params) => {return <IconButton color="primary"><Info/></IconButton>},
+            renderCell: (params) => {return <IconButton color="primary" onClick={() => {navigate("/view/" + params.row._id)}}><Info/></IconButton>},
             flex: 1
         }
     ]
@@ -65,7 +67,7 @@ const AdminPage = () => {
         {
             field: "action",
             headerName: "Azioni",
-            renderCell: (params) => {return <IconButton color="primary"><Info/></IconButton>},
+            renderCell: (params) => {return <IconButton color="primary" onClick={() => {navigate("/view/" + params.row._id)}}><Info/></IconButton>},
             flex: 1
         }
     ]
@@ -84,7 +86,7 @@ const AdminPage = () => {
                     />
                 </Grid>
                 <Grid item xs={12} md={1} >
-                    <Button fullWidth sx={{height: '100%'}}>
+                    <Button fullWidth sx={{height: '100%'}} onClick={() => {navigate("/create")}}>
                         <Add />
                     </Button>
                 </Grid>
