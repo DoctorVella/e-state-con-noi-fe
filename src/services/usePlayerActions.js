@@ -56,11 +56,25 @@ const usePlayerActions = () => {
         }
     }
 
+    const updatePlaterAsAnimatore = async (data) => {
+        try {
+            setLoading(true);
+            await axiosInstance.put("/update-player-as-animatore", data);
+            setLoading(false);
+            return true;
+        } catch (e) {
+            setLoading(false);
+            console.log(e);
+            return false;
+        }
+    }
+
     return {
         insertPlayer,
         findPlayer,
         insertPlayerAsAnimatore,
-        findPlayerAsAnimatore
+        findPlayerAsAnimatore,
+        updatePlaterAsAnimatore
     };
 }
 

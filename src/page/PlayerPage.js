@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import NewPlayerSuccessModal from "../components/NewPlayerSuccessModal";
+import UpdatePlayerSuccessModal from "../components/UpdatePlayerSuccessModal";
 import usePlayerActions from "../services/usePlayerActions";
 import { DEFAULT_1W_BROTHER, DEFAULT_1W_STANDARD, DEFAULT_2W_BROTHER, DEFAULT_2W_STANDARD, PLAYER_PAGE_CREATE_MODE, PLAYER_PAGE_UPDATE_MODE, PLAYER_PAGE_VIEW_MODE } from "../util/Constants";
 
@@ -14,7 +15,8 @@ const PlayerPage = ({ mode }) => {
     const [currentMode, setCurrentMode] = useState(mode);
     const playerActions = usePlayerActions();
     const {_id} = useParams();
-    const [openSuccessModal, setOpenSuccessModal] = useState(false);
+    const [openCreateSuccessModal, setOpenCreateSuccessModal] = useState(false);
+    const [openUpdateSuccessModal, setOpenUpdateSuccessModal] = useState(false);
 
     const getPageDescription = () => {
         if(currentMode === PLAYER_PAGE_CREATE_MODE) {
@@ -23,22 +25,6 @@ const PlayerPage = ({ mode }) => {
             return "Dettaglio del partecipante!"
         }else{
             return "Modifica il partecipante!"
-        }
-    }
-
-    const getPageMainButton = () => {
-        if(currentMode === PLAYER_PAGE_VIEW_MODE) {
-            return <Button fullWidth variant="contained" onClick={() => {setCurrentMode(PLAYER_PAGE_UPDATE_MODE)}}>Modifica</Button>
-        }else{
-            return <Button fullWidth variant="contained" type="submit">Invia</Button>
-        }
-    }
-
-    const getPageSecondaryButton = () => {
-        if(currentMode === PLAYER_PAGE_VIEW_MODE) {
-            return <Button fullWidth variant="outlined">Elimina</Button> //TODO onclick
-        }else{
-            return <Button fullWidth variant="outlined" onClick={() => {reset();}}>Svuota</Button>
         }
     }
 
@@ -77,7 +63,6 @@ const PlayerPage = ({ mode }) => {
 
     const fetchPlayers = async () => {
         let res = await playerActions.findPlayerAsAnimatore(_id);
-        console.log(res[0]);
         reset(res[0]);
     }
 
@@ -92,10 +77,15 @@ const PlayerPage = ({ mode }) => {
             let res = await playerActions.insertPlayerAsAnimatore(values);
             if(res) {
                 setCurrentMode(PLAYER_PAGE_VIEW_MODE);
-                setOpenSuccessModal(true);
+                setOpenCreateSuccessModal(true);
             }
-        }else{
-            //TODO
+        }else {
+            values._id = _id;
+            let res = await playerActions.updatePlaterAsAnimatore(values);
+            if(res) {
+                setCurrentMode(PLAYER_PAGE_VIEW_MODE);
+                setOpenUpdateSuccessModal(true);
+            }
         }
     }
 
@@ -133,6 +123,7 @@ const PlayerPage = ({ mode }) => {
                             <TextField
                                 fullWidth
                                 label="Nome"
+                                disabled={currentMode === PLAYER_PAGE_VIEW_MODE}
                                 value={field.value}
                                 onChange={field.onChange}
                                 error={!!fieldState.error}
@@ -148,6 +139,7 @@ const PlayerPage = ({ mode }) => {
                             <TextField
                                 fullWidth
                                 label="Cognome"
+                                disabled={currentMode === PLAYER_PAGE_VIEW_MODE}
                                 value={field.value}
                                 onChange={field.onChange}
                                 error={!!fieldState.error}
@@ -166,6 +158,7 @@ const PlayerPage = ({ mode }) => {
                                 fullWidth
                                 label="Età"
                                 type="number"
+                                disabled={currentMode === PLAYER_PAGE_VIEW_MODE}
                                 inputProps={{min:5, max:14}}
                                 value={field.value}
                                 onChange={field.onChange}
@@ -183,6 +176,7 @@ const PlayerPage = ({ mode }) => {
                                 fullWidth
                                 label="Telefono del genitore"
                                 type="number"
+                                disabled={currentMode === PLAYER_PAGE_VIEW_MODE}
                                 value={field.value}
                                 onChange={field.onChange}
                                 error={!!fieldState.error}
@@ -200,6 +194,7 @@ const PlayerPage = ({ mode }) => {
                             <TextField
                                 fullWidth
                                 label="Settimane di partecipazione"
+                                disabled={currentMode === PLAYER_PAGE_VIEW_MODE}
                                 select
                                 value={field.value}
                                 onChange={(e) => {
@@ -222,6 +217,7 @@ const PlayerPage = ({ mode }) => {
                             <TextField
                                 fullWidth
                                 label="Ha un fratello"
+                                disabled={currentMode === PLAYER_PAGE_VIEW_MODE}
                                 select
                                 value={field.value}
                                 onChange={(e) => {
@@ -244,6 +240,7 @@ const PlayerPage = ({ mode }) => {
                             <TextField
                                 fullWidth
                                 label="Sponsor"
+                                disabled={currentMode === PLAYER_PAGE_VIEW_MODE}
                                 select
                                 value={field.value}
                                 onChange={(e) => {
@@ -266,6 +263,7 @@ const PlayerPage = ({ mode }) => {
                             <TextField
                                 fullWidth
                                 label="Caso Eccezionale"
+                                disabled={currentMode === PLAYER_PAGE_VIEW_MODE}
                                 select
                                 value={field.value}
                                 onChange={(e) => {
@@ -290,6 +288,7 @@ const PlayerPage = ({ mode }) => {
                             <TextField
                                 fullWidth
                                 label="Quota Pagata"
+                                disabled={currentMode === PLAYER_PAGE_VIEW_MODE}
                                 select
                                 value={field.value}
                                 onChange={field.onChange}
@@ -309,9 +308,9 @@ const PlayerPage = ({ mode }) => {
                             <TextField
                                 fullWidth
                                 label="Importo"
-                                type={"number"}
+                                type="number"
                                 inputProps={{min:0, max:100}}
-                                disabled={!watch("isSponsor") && !watch("isException")}
+                                disabled={currentMode === PLAYER_PAGE_VIEW_MODE || !(watch("isSponsor") || watch("isException"))}
                                 value={field.value}
                                 onChange={field.onChange}
                                 error={!!fieldState.error}
@@ -329,6 +328,7 @@ const PlayerPage = ({ mode }) => {
                             <TextField
                                 fullWidth
                                 label="Eventuali note"
+                                disabled={currentMode === PLAYER_PAGE_VIEW_MODE}
                                 value={field.value}
                                 onChange={field.onChange}
                                 error={!!fieldState.error}
@@ -339,15 +339,19 @@ const PlayerPage = ({ mode }) => {
                 <Grid item xs={0} md={2} />
                 <Grid item xs={0} md={2} />
                 <Grid item xs={5} md={4} >
-                    {getPageSecondaryButton()}
+                    {currentMode === PLAYER_PAGE_VIEW_MODE ? <></> : <Button fullWidth variant="outlined" onClick={() => {reset();}}>Svuota</Button>}
                 </Grid>
                 <Grid item xs={5} md={4} >
-                    {getPageMainButton()}
+                    {currentMode === PLAYER_PAGE_VIEW_MODE ?
+                    <Button fullWidth variant="contained" onClick={() => {setTimeout(() => { setCurrentMode(PLAYER_PAGE_UPDATE_MODE) },100)}}>Modifica</Button>
+                    : <Button fullWidth variant="contained" type="submit">Invia</Button>
+                    }
                 </Grid>
                 <Grid item xs={0} md={2} />
             </Grid>
         </form>
-        <NewPlayerSuccessModal open={openSuccessModal} setOpen={setOpenSuccessModal} />
+        <NewPlayerSuccessModal open={openCreateSuccessModal} setOpen={setOpenCreateSuccessModal} />
+        <UpdatePlayerSuccessModal open={openUpdateSuccessModal} setOpen={setOpenUpdateSuccessModal} />
     </>
 }
 
