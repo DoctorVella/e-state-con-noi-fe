@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import usePlayerActions from "../services/usePlayerActions";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
+import SectionHeader from "../components/SectionHeader";
 
-const AnimatorePage = () => {
+const ConsultPlayerPage = () => {
     const { findPlayer } = usePlayerActions();
     const [players, setPlayers] = useState([]);
     const [shownPlayers, setShownPlayers] = useState([]);
@@ -52,7 +53,7 @@ const AnimatorePage = () => {
         {
             field: "action",
             headerName: "Azioni",
-            renderCell: (params) => {return <IconButton color="primary" onClick={() => {navigate("/view/" + params.row._id)}}><Info/></IconButton>},
+            renderCell: (params) => {return <IconButton color="primary" onClick={() => {navigate("/players/view/" + params.row._id)}}><Info/></IconButton>},
             flex: 1
         }
     ]
@@ -67,7 +68,7 @@ const AnimatorePage = () => {
         {
             field: "action",
             headerName: "Azioni",
-            renderCell: (params) => {return <IconButton color="primary" onClick={() => {navigate("/view/" + params.row._id)}}><Info/></IconButton>},
+            renderCell: (params) => {return <IconButton color="primary" onClick={() => {navigate("/players/view/" + params.row._id)}}><Info/></IconButton>},
             flex: 1
         }
     ]
@@ -75,6 +76,7 @@ const AnimatorePage = () => {
     return (
         <>
             <Grid container rowSpacing={2} columnSpacing={2}>
+                <SectionHeader title="Gestione Partecipanti" />
                 <Grid item xs={0} md={2} />
                 <Grid item xs={12} md={7} >
                     <TextField 
@@ -86,7 +88,7 @@ const AnimatorePage = () => {
                     />
                 </Grid>
                 <Grid item xs={12} md={1} >
-                    <Button fullWidth sx={{height: '100%'}} onClick={() => {navigate("/create")}}>
+                    <Button fullWidth sx={{height: '100%'}} onClick={() => {navigate("/players/create")}}>
                         <Add />
                     </Button>
                 </Grid>
@@ -119,4 +121,4 @@ const AnimatorePage = () => {
     );
 }
 
-export default AnimatorePage;
+export default ConsultPlayerPage;

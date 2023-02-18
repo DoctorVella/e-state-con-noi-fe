@@ -46,7 +46,7 @@ const RegisterModal = () => {
         let isRegistered = await authActions.register(values);
         setIsError(!isRegistered);
         if(isRegistered) {
-            navigate("/user");
+            navigate("/iscrittore");
             setOpenRegisterModal(false);
             reset();
         }

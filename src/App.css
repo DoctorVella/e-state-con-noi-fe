@@ -3,3 +3,11 @@
   background-color: #FEFCDB;
   min-height: 100vh;
 }
+
+.Divider {
+  background-color: #F7931E;
+  width: 100%;
+  padding: 1px;
+  height: 1px;
+  border-radius: 1px;
+}

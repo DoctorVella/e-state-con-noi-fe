@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import useAuthActions from "../services/useAuthActions";
 import { GlobalContext } from "../contexts/GlobalContext";
-import { SESSION_EXPIRED, SESSION_OK } from "../util/Constants";
+import { AUTH_LEVEL_ADMIN, AUTH_LEVEL_ANIMATORE, SESSION_EXPIRED, SESSION_OK } from "../util/Constants";
 
 const LoginModal = () => {
     const { 
@@ -41,7 +41,14 @@ const LoginModal = () => {
         let isAuthenticated = await authActions.login(values);
         setIsError(!isAuthenticated);
         if(isAuthenticated) {
-            navigate("/user");
+            let authLevel = localStorage.getItem("authLevel");
+            if(authLevel === AUTH_LEVEL_ADMIN) {
+                navigate("/admin");
+            }else if(authLevel === AUTH_LEVEL_ANIMATORE) {
+                navigate("/players");
+            }else {
+                navigate("/iscrittore");
+            }
             setSessionState(SESSION_OK);
             setOpenLoginModal(false);
             reset();

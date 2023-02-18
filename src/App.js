@@ -4,13 +4,15 @@ import { muiTheme } from './util/MuiTheme';
 import HomePage from './page/HomePage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginModal from './components/LoginModal';
-import UserPage from './page/UserPage';
 import { GlobalContextProvider } from './contexts/GlobalContext';
 import Loader from './components/Loader';
 import RegisterModal from './components/RegisterModal';
 import ClientCallFailedModal from './components/ClientCallFailedModal';
 import PlayerPage from './page/PlayerPage';
 import { PLAYER_PAGE_CREATE_MODE, PLAYER_PAGE_VIEW_MODE } from './util/Constants';
+import ConsultPlayerPage from './page/ConsultPlayerPage';
+import AdminPage from './page/AdminPage';
+import IscrittorePage from './page/IscrittorePage';
 
 function App() {
 
@@ -25,9 +27,11 @@ function App() {
               </Box>
               <BrowserRouter>
                 <Routes>
-                  <Route path="/user" element={<UserPage />} />
-                  <Route path="/create" element={<PlayerPage mode={PLAYER_PAGE_CREATE_MODE} />} />
-                  <Route path="/view/:_id" element={<PlayerPage mode={PLAYER_PAGE_VIEW_MODE} />} />
+                  <Route path="/iscrittore" element={<IscrittorePage />} />
+                  <Route path="/admin" element={<AdminPage />} />
+                  <Route path="/players" element={<ConsultPlayerPage />} />
+                  <Route path="/players/create" element={<PlayerPage mode={PLAYER_PAGE_CREATE_MODE} />} />
+                  <Route path="/players/view/:_id" element={<PlayerPage mode={PLAYER_PAGE_VIEW_MODE} />} />
                   <Route path="/" element={<HomePage />} />
                 </Routes>
                 <LoginModal />

@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import NewPlayerSuccessModal from "../components/NewPlayerSuccessModal";
+import SectionHeader from "../components/SectionHeader";
 import UpdatePlayerSuccessModal from "../components/UpdatePlayerSuccessModal";
 import usePlayerActions from "../services/usePlayerActions";
 import { DEFAULT_1W_BROTHER, DEFAULT_1W_STANDARD, DEFAULT_2W_BROTHER, DEFAULT_2W_STANDARD, PLAYER_PAGE_CREATE_MODE, PLAYER_PAGE_UPDATE_MODE, PLAYER_PAGE_VIEW_MODE } from "../util/Constants";
@@ -102,9 +103,10 @@ const PlayerPage = ({ mode }) => {
     return <>
         <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2}>
+                <SectionHeader title="Gestione Partecipanti" />
                 <Grid item xs={0} md={2} />
                 <Grid item xs={3} md={1}>
-                    <IconButton variant="filled" onClick={() => {navigate("/user")}}>
+                    <IconButton variant="filled" onClick={() => {navigate("/players")}}>
                         <ArrowBack />
                     </IconButton>
                 </Grid>
