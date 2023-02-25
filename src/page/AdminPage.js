@@ -17,6 +17,16 @@ const AdminPage = () => {
                     </CardActions>
                 </Card>
             </Grid>
+            <Grid item xs={12} md={4}>
+                <Card raised>
+                    <CardContent>
+                        <Typography variant='h3'>Vuoi gestire le squadre?</Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button onClick={() => { navigate("/teams") }}>OK</Button>
+                    </CardActions>
+                </Card>
+            </Grid>
             <Grid item xs={0} md={2} />
         </Grid>
     </>);

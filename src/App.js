@@ -13,6 +13,7 @@ import { PLAYER_PAGE_CREATE_MODE, PLAYER_PAGE_VIEW_MODE } from './util/Constants
 import ConsultPlayerPage from './page/ConsultPlayerPage';
 import AdminPage from './page/AdminPage';
 import IscrittorePage from './page/IscrittorePage';
+import TeamPage from './page/TeamPage';
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
                   <Route path="/players" element={<ConsultPlayerPage />} />
                   <Route path="/players/create" element={<PlayerPage mode={PLAYER_PAGE_CREATE_MODE} />} />
                   <Route path="/players/view/:_id" element={<PlayerPage mode={PLAYER_PAGE_VIEW_MODE} />} />
+                  <Route path="/teams" element={<TeamPage />} />
                   <Route path="/" element={<HomePage />} />
                 </Routes>
                 <LoginModal />
