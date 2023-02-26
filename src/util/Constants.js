@@ -19,3 +19,4 @@ export const AZZURRI_TEAM_NAME = "AZZURRI";
 export const GIALLI_TEAM_NAME = "GIALLI";
 export const ROSSI_TEAM_NAME = "ROSSI";
 export const VERDI_TEAM_NAME = "VERDI";
+export const NOT_ASSIGNED_TEAM_NAME = "NON ASSEGNATI";

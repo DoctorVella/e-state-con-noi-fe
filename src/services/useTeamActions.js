@@ -1,10 +1,9 @@
+import { NOT_ASSIGNED_TEAM_NAME } from "../util/Constants";
+
 const useTeamActions = () => {
 
-    const buildTeams = (players, teamNames) => {
-        let teamMap = new Map();
-        teamNames.forEach(name => {
-            teamMap.set(name,[]);
-        });
+    const buildTeams = (teamMap, teamNames) => {
+        let players = teamMap.get(NOT_ASSIGNED_TEAM_NAME);
         players.sort((a,b) => (a.age - b.age));
         let nameIndex = 0;
         players.forEach(p => {
@@ -14,6 +13,7 @@ const useTeamActions = () => {
                 nameIndex = 0;
             }
         })
+        teamMap.set(NOT_ASSIGNED_TEAM_NAME,[]);
         return teamMap;
     };
 

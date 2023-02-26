@@ -187,6 +187,6 @@ export const getTeamColors = (name) => {
         case VERDI_TEAM_NAME:
             return greenTeam;
         default: 
-            return {};
+            return "#D3D3D3";
     }
 }
