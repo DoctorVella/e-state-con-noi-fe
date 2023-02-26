@@ -7,7 +7,7 @@ const TeamDroppable = ({name,players}) => {
     const {setNodeRef} = useDroppable({id: name,});
 
     return (<Paper ref={setNodeRef} elevation={2} sx={{backgroundColor: getTeamColors(name)}}>
-        <Typography color="black" variant="h6">{name}</Typography>
+        <Typography color="black" variant="h6">{name} ({players ? players.length : 0})</Typography>
         {players?.map(p => (
             <Draggable key={p._id} id={p._id}>
                 <Typography color="black">{p.name} {p.surname} {p.age}</Typography>

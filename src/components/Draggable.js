@@ -7,7 +7,8 @@ const Draggable = (props) => {
     
     const style = transform ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-        backgroundColor: "inherit"
+        backgroundColor: "inherit",
+        borderRadius: "5px"
     } : undefined;
 
     return (
