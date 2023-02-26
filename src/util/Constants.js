@@ -14,3 +14,8 @@ export const DEFAULT_2W_STANDARD = 50;
 export const DEFAULT_1W_STANDARD = 30;
 export const DEFAULT_2W_BROTHER = 40;
 export const DEFAULT_1W_BROTHER = 30;
+
+export const AZZURRI_TEAM_NAME = "AZZURRI";
+export const GIALLI_TEAM_NAME = "GIALLI";
+export const ROSSI_TEAM_NAME = "ROSSI";
+export const VERDI_TEAM_NAME = "VERDI";

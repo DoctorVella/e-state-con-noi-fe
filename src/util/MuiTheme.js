@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material";
+import { AZZURRI_TEAM_NAME, GIALLI_TEAM_NAME, ROSSI_TEAM_NAME, VERDI_TEAM_NAME } from "./Constants";
 
 const orange = '#F7931E';
 const darkOrange = '#F05A28';
@@ -173,4 +174,19 @@ muiTheme.typography.paragraph = {
     [muiTheme.breakpoints.up('md')]: {
       fontSize: '24px',
     },
+}
+
+export const getTeamColors = (name) => {
+    switch(name) {
+        case AZZURRI_TEAM_NAME:
+            return blueTeam;
+        case GIALLI_TEAM_NAME:
+            return yellowTeam;
+        case ROSSI_TEAM_NAME:
+            return redTeam;
+        case VERDI_TEAM_NAME:
+            return greenTeam;
+        default: 
+            return {};
+    }
 }
