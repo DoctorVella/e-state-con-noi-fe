@@ -13,7 +13,7 @@ const TeamDroppable = ({name,players}) => {
                 <Typography color="black" variant="h6">{name} ({players ? players.length : 0})</Typography>
                 <Stack direction="row" spacing={8} justifyContent="center">    
                     {players?.map(p => (
-                        <Draggable key={p._id} id={p._id}>
+                        <Draggable key={p._id} id={p._id} data={name}>
                             <Typography color="black">{p.name} {p.surname} {p.age}</Typography>
                         </Draggable>
                     ))}
@@ -22,7 +22,7 @@ const TeamDroppable = ({name,players}) => {
         <Paper ref={setNodeRef} elevation={2} sx={{backgroundColor: getTeamColors(name)}}>
             <Typography color="black" variant="h6">{name} ({players ? players.length : 0})</Typography>
             {players?.map(p => (
-                <Draggable key={p._id} id={p._id}>
+                <Draggable key={p._id} id={p._id} data={name}>
                     <Typography color="black">{p.name} {p.surname} {p.age}</Typography>
                 </Draggable>
             ))}

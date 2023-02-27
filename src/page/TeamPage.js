@@ -16,18 +16,10 @@ const TeamPage = () => {
 
     const handleDragEnd = (event) => {
         const {over, active} = event;
-        let movedPlayer;
-        let teamNamesWithNA = [...teamNames,NOT_ASSIGNED_TEAM_NAME];
-        for(let nameIndex in teamNamesWithNA) {
-            let teamPlayers = teams?.get(teamNamesWithNA[nameIndex]);
-            let playerIndex = teamPlayers.findIndex(p => active.id === p._id);
-            if(playerIndex !== -1) {
-                movedPlayer = teamPlayers[playerIndex];
-                teamPlayers.splice(playerIndex,1);
-                break;
-            }
-        }
-        teams?.get(over.id).push(movedPlayer);
+        let teamPlayers = teams?.get(active.data.current);
+        let playerIndex = teamPlayers.findIndex(p => active.id === p._id);
+        teams?.get(over.id).push(teamPlayers[playerIndex]);
+        teamPlayers.splice(playerIndex,1);
     }
 
     const fetchPlayers = async () => {
