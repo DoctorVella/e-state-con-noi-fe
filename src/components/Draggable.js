@@ -11,11 +11,8 @@ const Draggable = (props) => {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
         backgroundColor: "inherit",
         borderRadius: "5px",
-        maxWidth: "250px"
-    } : {
-        display: "inline-block",
         padding: "0px 30px 0px 30px"
-    };
+    } : undefined;
 
     return (
         <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
