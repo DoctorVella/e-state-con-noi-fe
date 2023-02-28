@@ -17,8 +17,13 @@ const useTeamActions = () => {
         return teamMap;
     };
 
+    const persistTeamChanges = (changes) => {
+        console.log(changes);
+    }
+
     return {
-        buildTeams
+        buildTeams,
+        persistTeamChanges
     };
 }
 

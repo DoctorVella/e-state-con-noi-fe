@@ -11,29 +11,33 @@ const TeamPage = () => {
     const playerActions = usePlayerActions();
     const teamActions = useTeamActions();
     const [teams, setTeams] = useState();
-    const [fetch, setFetch] = useState(0);
+    const [changes, setChanges] = useState(new Map());
+    const [isGenerateTeam, setIsGenerateTeam] = useState(true);
     const teamNames = [AZZURRI_TEAM_NAME, GIALLI_TEAM_NAME, ROSSI_TEAM_NAME, VERDI_TEAM_NAME];
 
     const handleDragEnd = (event) => {
-        const {over, active} = event;
+        const { over, active } = event;
         let teamPlayers = teams?.get(active.data.current);
         let playerIndex = teamPlayers.findIndex(p => active.id === p._id);
         teams?.get(over.id).push(teamPlayers[playerIndex]);
-        teamPlayers.splice(playerIndex,1);
+        teamPlayers.splice(playerIndex, 1);
+        changes.set(active.id, over.id);
+        setIsGenerateTeam(false);
     }
 
     const fetchPlayers = async () => {
         let res = await playerActions.findPlayer();
         if (res) {
             let teamMap = new Map();
-            teamMap.set(NOT_ASSIGNED_TEAM_NAME,[]);
+            teamMap.set(NOT_ASSIGNED_TEAM_NAME, []);
             teamNames.forEach(name => {
-                teamMap.set(name,[]);
+                teamMap.set(name, []);
             });
             res.forEach(p => {
-                if(p.team) {
+                if (p.team) {
+                    setIsGenerateTeam(false);
                     teamMap.get(p.team).push(p);
-                }else {
+                } else {
                     teamMap.get(NOT_ASSIGNED_TEAM_NAME).push(p);
                 }
             });
@@ -41,14 +45,24 @@ const TeamPage = () => {
         }
     }
 
-    const generateTeams = () => {
-        setTeams(teamActions.buildTeams(teams, teamNames));
-        setFetch(fetch => fetch + 1);
-    }
-
     useEffect(() => {
         fetchPlayers();
     }, [])
+
+    const generateTeams = () => {
+        setTeams(teamActions.buildTeams(teams, teamNames));
+        teams.forEach((value, key) => {
+            value.forEach(element => {
+                changes.set(element._id, key);
+            });
+        });
+        setIsGenerateTeam(false);
+    }
+
+    const saveChanges = () => {
+        teamActions.persistTeamChanges(changes);
+        setChanges(new Map());
+    }
 
     return (<>
         <DndContext onDragEnd={handleDragEnd}>
@@ -56,7 +70,10 @@ const TeamPage = () => {
                 <SectionHeader title="Gestione Squadre" />
                 <Grid item xs={0} md={2} />
                 <Grid item xs={12} md={8}>
-                    <Button fullWidth onClick={() => {generateTeams();}}>Genera Squadre</Button>
+                    {isGenerateTeam
+                        ? <Button fullWidth onClick={() => { generateTeams(); }}>Genera Squadre</Button>
+                        : <Button fullWidth onClick={() => { saveChanges(); }} disabled={changes?.keys()?.length === 0}>Salva Cambiamenti</Button> 
+                    }
                 </Grid>
                 <Grid item xs={0} md={2} />
                 <Grid item xs={0} md={2} />
