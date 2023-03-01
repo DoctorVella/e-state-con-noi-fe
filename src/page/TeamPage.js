@@ -1,4 +1,4 @@
-import { Button, Grid } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import usePlayerActions from "../services/usePlayerActions";
 import useTeamActions from "../services/useTeamActions";
@@ -13,6 +13,7 @@ const TeamPage = () => {
     const [teams, setTeams] = useState();
     const [changes, setChanges] = useState(new Map());
     const [isGenerateTeam, setIsGenerateTeam] = useState(true);
+    const [openSuccessModal, setOpenSuccessModal] = useState(false);
     const teamNames = [AZZURRI_TEAM_NAME, GIALLI_TEAM_NAME, ROSSI_TEAM_NAME, VERDI_TEAM_NAME];
 
     const handleDragEnd = (event) => {
@@ -21,7 +22,11 @@ const TeamPage = () => {
         let playerIndex = teamPlayers.findIndex(p => active.id === p._id);
         teams?.get(over.id).push(teamPlayers[playerIndex]);
         teamPlayers.splice(playerIndex, 1);
-        changes.set(active.id, over.id);
+        if(over.id !== NOT_ASSIGNED_TEAM_NAME) {
+            changes.set(active.id, over.id);
+        }else{
+            changes.delete(active.id);
+        }
         setIsGenerateTeam(false);
     }
 
@@ -33,7 +38,7 @@ const TeamPage = () => {
             teamNames.forEach(name => {
                 teamMap.set(name, []);
             });
-            res.forEach(p => {
+            res.filter(p => p.isPayed).forEach(p => {
                 if (p.team) {
                     setIsGenerateTeam(false);
                     teamMap.get(p.team).push(p);
@@ -59,9 +64,20 @@ const TeamPage = () => {
         setIsGenerateTeam(false);
     }
 
-    const saveChanges = () => {
-        teamActions.persistTeamChanges(changes);
-        setChanges(new Map());
+    const saveChanges = async () => {
+        if(changes.size === 0) {
+            setOpenSuccessModal(true);
+            return;
+        }
+        let changeArray = [];
+        changes.forEach((value, key) => {
+            changeArray.push({_id: key, team: value})
+        });
+        let res = await teamActions.persistTeamChanges(changeArray);
+        if(res) {
+            changes.clear();
+            setOpenSuccessModal(true);
+        }
     }
 
     return (<>
@@ -72,7 +88,7 @@ const TeamPage = () => {
                 <Grid item xs={12} md={8}>
                     {isGenerateTeam
                         ? <Button fullWidth onClick={() => { generateTeams(); }}>Genera Squadre</Button>
-                        : <Button fullWidth onClick={() => { saveChanges(); }} disabled={changes?.keys()?.length === 0}>Salva Cambiamenti</Button> 
+                        : <Button fullWidth onClick={() => { saveChanges(); }}>Salva Cambiamenti</Button> 
                     }
                 </Grid>
                 <Grid item xs={0} md={2} />
@@ -90,6 +106,17 @@ const TeamPage = () => {
                 <Grid item xs={0} md={2} />
             </Grid>
         </DndContext>
+        <Dialog open={openSuccessModal}>
+            <DialogTitle>
+                Cambiamenti salvati!
+            </DialogTitle>
+            <DialogContent>
+                I partecipanti sono stati assegnati alle squadre.
+            </DialogContent>
+            <DialogActions>
+                <Button variant="contained" onClick={() => {setOpenSuccessModal(false)}}>OK</Button>
+            </DialogActions>
+        </Dialog>
     </>);
 }
 

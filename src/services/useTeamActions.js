@@ -1,6 +1,9 @@
+import { useContext } from "react";
+import { GlobalContext } from "../contexts/GlobalContext";
 import { NOT_ASSIGNED_TEAM_NAME } from "../util/Constants";
 
 const useTeamActions = () => {
+    const { setLoading, axiosInstance } = useContext(GlobalContext);
 
     const buildTeams = (teamMap, teamNames) => {
         let players = teamMap.get(NOT_ASSIGNED_TEAM_NAME);
@@ -17,8 +20,17 @@ const useTeamActions = () => {
         return teamMap;
     };
 
-    const persistTeamChanges = (changes) => {
-        console.log(changes);
+    const persistTeamChanges = async (changes) => {
+        try{
+            setLoading(true);
+            await axiosInstance.put("/team-assign",changes);
+            setLoading(false);
+            return true;
+        }catch(e) {
+            setLoading(false);
+            console.log(e);
+            return false;
+        }
     }
 
     return {
