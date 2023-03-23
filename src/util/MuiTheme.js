@@ -107,6 +107,20 @@ export const muiTheme = createTheme({
                 }
             }
         },
+        MuiAccordion: {
+            defaultProps: {
+                style: {
+                    backgroundColor: lightOrange
+                }
+            }
+        },
+        MuiAccordionDetails: {
+            defaultProps: {
+                style: {
+                    borderTop: "1px solid " + orange
+                }
+            }
+        },
         MuiTypography: {
             defaultProps: {
                 fontWeight: '700',

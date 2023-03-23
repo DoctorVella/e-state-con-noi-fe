@@ -5,7 +5,7 @@ const AdminPage = () => {
     const navigate = useNavigate();
 
     return (<>
-        <Grid container rowSpacing={2} columnSpacing={5}>
+        <Grid container rowSpacing={5} columnSpacing={5}>
             <Grid item xs={0} md={2} />
             <Grid item xs={12} md={4}>
                 <Card raised>
@@ -27,6 +27,19 @@ const AdminPage = () => {
                     </CardActions>
                 </Card>
             </Grid>
+            <Grid item xs={0} md={2} />
+            <Grid item xs={0} md={2} />
+            <Grid item xs={12} md={4}>
+                <Card raised>
+                    <CardContent>
+                        <Typography variant='h3'>Vuoi gestire le giornate?</Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button onClick={() => { navigate("/day") }}>OK</Button>
+                    </CardActions>
+                </Card>
+            </Grid>
+            <Grid item xs={12} md={4} />
             <Grid item xs={0} md={2} />
         </Grid>
     </>);
