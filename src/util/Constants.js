@@ -20,6 +20,7 @@ export const GIALLI_TEAM_NAME = "GIALLI";
 export const ROSSI_TEAM_NAME = "ROSSI";
 export const VERDI_TEAM_NAME = "VERDI";
 export const NOT_ASSIGNED_TEAM_NAME = "NON ASSEGNATI";
+export const TEAM_NAMES = [AZZURRI_TEAM_NAME, GIALLI_TEAM_NAME, ROSSI_TEAM_NAME, VERDI_TEAM_NAME];
 
 export const SCORE_TYPE_1_VS_1 = "1vs1";
 export const SCORE_TYPE_ALL_VS_ALL = "ALLvsALL";

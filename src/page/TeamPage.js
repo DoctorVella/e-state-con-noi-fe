@@ -5,7 +5,7 @@ import useTeamActions from "../services/useTeamActions";
 import { DndContext } from '@dnd-kit/core';
 import TeamDroppable from "../components/TeamDroppable";
 import SectionHeader from "../components/SectionHeader";
-import { AZZURRI_TEAM_NAME, GIALLI_TEAM_NAME, NOT_ASSIGNED_TEAM_NAME, ROSSI_TEAM_NAME, VERDI_TEAM_NAME } from "../util/Constants";
+import { NOT_ASSIGNED_TEAM_NAME, TEAM_NAMES } from "../util/Constants";
 
 const TeamPage = () => {
     const playerActions = usePlayerActions();
@@ -14,7 +14,7 @@ const TeamPage = () => {
     const [changes, setChanges] = useState(new Map());
     const [isGenerateTeam, setIsGenerateTeam] = useState(true);
     const [openSuccessModal, setOpenSuccessModal] = useState(false);
-    const teamNames = [AZZURRI_TEAM_NAME, GIALLI_TEAM_NAME, ROSSI_TEAM_NAME, VERDI_TEAM_NAME];
+    const teamNames = TEAM_NAMES;
 
     const handleDragEnd = (event) => {
         const { over, active } = event;

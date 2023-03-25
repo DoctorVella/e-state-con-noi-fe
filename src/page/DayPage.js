@@ -5,6 +5,7 @@ import ActivityModal from "../components/ActivityModal";
 import SectionHeader from "../components/SectionHeader";
 import SubactivityModal from "../components/SubactivityModal";
 import { ACTIVITY_TYPES, ACTIVITY_TYPE_KEY_PROVA_ANIMATORE, ACTIVITY_TYPE_KEY_STAFFETTA_1_VS_1, ACTIVITY_TYPE_KEY_STAFFETTA_1_VS_1_ACQUA, ACTIVITY_TYPE_KEY_STAFFETTA_ALL_VS_ALL, ACTIVITY_TYPE_KEY_STAFFETTA_ALL_VS_ALL_ACQUA, SUBACTIVITY_TYPES, SUBACTIVITY_TYPE_KEY_MANCHE_1_VS_1, SUBACTIVITY_TYPE_KEY_MANCHE_ALL_VS_ALL } from "../util/Constants";
+import { getTeamColors } from "../util/MuiTheme";
 
 const DayPage = () => {
     const [dayDate, setDayDate] = useState((new Date()).toISOString().split("T")[0]);
@@ -85,7 +86,10 @@ const DayPage = () => {
             initVal.name = "";
             initVal.description = "";
         }else{
-            
+            initVal.manche1team1 = "";
+            initVal.manche1team2 = "";
+            initVal.manche2team1 = "";
+            initVal.manche2team2 = "";
         }
         setSubactivityInitialValues(initVal);
         activity.modifying = true;
@@ -153,6 +157,18 @@ const DayPage = () => {
                                             {s.type !== SUBACTIVITY_TYPE_KEY_MANCHE_ALL_VS_ALL ? <IconButton color="primary" onClick={() => { modifySubactivity(a,s) }}><BorderColorOutlined/></IconButton> : null}
                                             {s.type !== SUBACTIVITY_TYPE_KEY_MANCHE_ALL_VS_ALL ? <IconButton color="primary" onClick={() => { removeSubactivity(a,s) }}><DeleteOutline/></IconButton> : null}
                                         </Typography>
+                                        {s.type === SUBACTIVITY_TYPE_KEY_MANCHE_1_VS_1 ? <>
+                                            <Typography align="left">
+                                                <Chip sx={{m: "10px", fontSize:"18px", color: getTeamColors(s.manche1team1), backgroundColor: "white"}} label={s.manche1team1}/>
+                                                VS
+                                                <Chip sx={{m: "10px", fontSize:"18px", color: getTeamColors(s.manche1team2), backgroundColor: "white"}} label={s.manche1team2}/>
+                                            </Typography>
+                                            <Typography align="left">
+                                                <Chip sx={{m: "10px", fontSize:"18px", color: getTeamColors(s.manche2team1), backgroundColor: "white"}} label={s.manche2team1}/>
+                                                VS 
+                                                <Chip sx={{m: "10px", fontSize:"18px", color: getTeamColors(s.manche2team2), backgroundColor: "white"}} label={s.manche2team2}/>
+                                            </Typography>
+                                        </> : null}
                                         <Typography align="left">{s.description}</Typography>
                                     </div>
                                 )}
