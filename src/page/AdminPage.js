@@ -39,7 +39,16 @@ const AdminPage = () => {
                     </CardActions>
                 </Card>
             </Grid>
-            <Grid item xs={12} md={4} />
+            <Grid item xs={12} md={4}>
+                <Card raised>
+                    <CardContent>
+                        <Typography variant='h3'>Vuoi gestire il punteggio?</Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button onClick={() => { navigate("/score") }}>OK</Button>
+                    </CardActions>
+                </Card>
+            </Grid>
             <Grid item xs={0} md={2} />
         </Grid>
     </>);

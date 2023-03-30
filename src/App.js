@@ -15,6 +15,7 @@ import AdminPage from './page/AdminPage';
 import IscrittorePage from './page/IscrittorePage';
 import TeamPage from './page/TeamPage';
 import DayPage from './page/DayPage';
+import ScorePage from './page/ScorePage';
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
                   <Route path="/players/view/:_id" element={<PlayerPage mode={PLAYER_PAGE_VIEW_MODE} />} />
                   <Route path="/teams" element={<TeamPage />} />
                   <Route path="/day" element={<DayPage/>} />
+                  <Route path="/score" element={<ScorePage/>} />
                   <Route path="/" element={<HomePage />} />
                 </Routes>
                 <LoginModal />
