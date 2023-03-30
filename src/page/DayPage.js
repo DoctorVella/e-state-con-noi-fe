@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ActivityModal from "../components/ActivityModal";
 import SectionHeader from "../components/SectionHeader";
 import SubactivityModal from "../components/SubactivityModal";
+import useDayActions from "../services/useDayActions";
 import { ACTIVITY_TYPES, ACTIVITY_TYPE_KEY_PROVA_ANIMATORE, ACTIVITY_TYPE_KEY_STAFFETTA_1_VS_1, ACTIVITY_TYPE_KEY_STAFFETTA_1_VS_1_ACQUA, ACTIVITY_TYPE_KEY_STAFFETTA_ALL_VS_ALL, ACTIVITY_TYPE_KEY_STAFFETTA_ALL_VS_ALL_ACQUA, SUBACTIVITY_TYPES, SUBACTIVITY_TYPE_KEY_MANCHE_1_VS_1, SUBACTIVITY_TYPE_KEY_MANCHE_ALL_VS_ALL } from "../util/Constants";
 import { getTeamColors } from "../util/MuiTheme";
 
@@ -20,13 +21,22 @@ const DayPage = () => {
     const [activityInitialValues,setActivityInitialValues] = useState(activityDefaultValues);
     const [subactivityInitialValues,setSubactivityInitialValues] = useState();
     const [fetch,setFetch] = useState(0);
+    const dayActions = useDayActions();
+
+    const fetchDay = async (day) => {
+        let res = await dayActions.findDay(day);
+        if(res) {
+            setActivities(res.activities);
+        }
+    }
 
     useEffect(()=>{
-        console.log(dayDate)
+        fetchDay(dayDate);
     },[dayDate])
 
     const removeActivity = (a) => {
         setActivities(activities.filter(activity => activity.name !== a.name || activity.type !== a.type));
+        dayActions.createUpdateDay(dayDate,activities);
     }
 
     const addActivity = () => {
@@ -55,6 +65,7 @@ const DayPage = () => {
             temp.push(values);
         }
         setActivities(temp);
+        dayActions.createUpdateDay(dayDate,activities);
     }
 
     const canAddSubactivity = (activity) => {
@@ -76,6 +87,7 @@ const DayPage = () => {
     const removeSubactivity = (activity,subactivity) => {
         activity.subactivities = activity.subactivities.filter(s => s !== subactivity);
         setFetch(fetch+1);
+        dayActions.createUpdateDay(dayDate,activities);
     }
 
     const addSubactivity = (activity) => {
@@ -114,6 +126,7 @@ const DayPage = () => {
             activity.subactivities.push(values);
         }
         setFetch(fetch+1);
+        dayActions.createUpdateDay(dayDate,activities);
     }
 
     return (
