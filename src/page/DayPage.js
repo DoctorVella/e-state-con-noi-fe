@@ -217,7 +217,7 @@ const DayPage = () => {
                                     <Chip sx={{ml: "10px", mr: "10px", color: "white", backgroundColor: ACTIVITY_TYPES.get(a.type).chipColor}} label={ACTIVITY_TYPES.get(a.type).label}/>
                                 </Typography>
                                 <IconButton color="primary" onClick={() => { modifyActivity(a) }}><BorderColorOutlined/></IconButton>
-                                <IconButton color="primary" onClick={() => { removeActivity(a) }}><DeleteOutline/></IconButton>
+                                {a.scoreList?.length > 0 ? null : <IconButton color="primary" onClick={() => { removeActivity(a) }}><DeleteOutline/></IconButton>}
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography align="left">{a.description}</Typography>
