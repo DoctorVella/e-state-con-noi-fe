@@ -7,12 +7,16 @@ import SubactivityModal from "../components/SubactivityModal";
 import useDayActions from "../services/useDayActions";
 import { ACTIVITY_TYPES, ACTIVITY_TYPE_KEY_PROVA_ANIMATORE, ACTIVITY_TYPE_KEY_STAFFETTA_1_VS_1, ACTIVITY_TYPE_KEY_STAFFETTA_1_VS_1_ACQUA, ACTIVITY_TYPE_KEY_STAFFETTA_ALL_VS_ALL, ACTIVITY_TYPE_KEY_STAFFETTA_ALL_VS_ALL_ACQUA, SUBACTIVITY_TYPES, SUBACTIVITY_TYPE_KEY_MANCHE_1_VS_1, SUBACTIVITY_TYPE_KEY_MANCHE_ALL_VS_ALL } from "../util/Constants";
 import { getTeamColors } from "../util/MuiTheme";
+import ConfirmModal from "../components/ConfirmModal";
 
 const DayPage = () => {
     const [dayDate, setDayDate] = useState((new Date()).toISOString().split("T")[0]);
     const [activities, setActivities] = useState([]);
     const [openActivityModal, setOpenActivityModal] = useState(false);
     const [openSubactivityModal, setOpenSubactivityModal] = useState(false);
+    const [openDeleteActivityModal, setOpenDeleteActivityModal] = useState(false);
+    const [deleteDescription, setDeleteDescription] = useState("");
+    const [openDeleteSubactivityModal, setOpenDeleteSubactivityModal] = useState(false);
     const activityDefaultValues = {
         name: "",
         type: "",
@@ -35,13 +39,35 @@ const DayPage = () => {
     },[dayDate])
 
     const removeActivity = (a) => {
-        setActivities(activities.filter(activity => activity.name !== a.name || activity.type !== a.type));
+        a.modifying = true;
+        setDeleteDescription("Eliminare " + ACTIVITY_TYPES.get(a.type).label + " " + a.name + "?");
+        setOpenDeleteActivityModal(true);
+    }
+
+    const confirmRemoveActivity = () => {
+        setActivities(activities.filter(activity => !activity.modifying));
         dayActions.createUpdateDay(dayDate,activities);
+    }
+
+    const closeDeleteActivityModal = (isOpen) => {
+        let a = activities.find(activity => activity.modifying);
+        if(!isOpen && a) {
+            delete a.modifying;
+        }
+        setOpenDeleteActivityModal(false);
     }
 
     const addActivity = () => {
         setActivityInitialValues(activityDefaultValues);
         setOpenActivityModal(true);
+    }
+
+    const closeActivityModal = (isOpen) => {
+        let a = activities.find(activity => activity.modifying);
+        if(!isOpen && a) {
+            delete a.modifying;
+        }
+        setOpenActivityModal(false);
     }
 
     const modifyActivity = (a) => {
@@ -84,10 +110,43 @@ const DayPage = () => {
         }
     }
 
+    const closeSubactivityModal = (isOpen) => {
+        let a = activities.find(activity => activity.modifying);
+        if(a?.modifying) {
+            delete a.modifying;
+        }
+        let s = a?.subactivities.find(subactivity => subactivity.modifying);
+        if(!isOpen && s) {
+            delete s.modifying;
+        }
+        setOpenSubactivityModal(false);
+    }
+
     const removeSubactivity = (activity,subactivity) => {
-        activity.subactivities = activity.subactivities.filter(s => s !== subactivity);
+        activity.modifying = true;
+        subactivity.modifying = true;
+        setDeleteDescription("Eliminare " + SUBACTIVITY_TYPES.get(subactivity.type).label + " " + subactivity.name + "?");
+        setOpenDeleteSubactivityModal(true);
+    }
+
+    const confirmRemoveSubactivity = () => {
+        let activity = activities?.find(activity => activity.modifying);
+        delete activity.modifying;
+        activity.subactivities = activity.subactivities.filter(s => !s.modifying);
         setFetch(fetch+1);
         dayActions.createUpdateDay(dayDate,activities);
+    }
+
+    const closeDeleteSubactivityModal = (isOpen) => {
+        let a = activities.find(activity => activity.modifying);
+        if(a?.modifying) {
+            delete a.modifying;
+        }
+        let s = a?.subactivities.find(subactivity => subactivity.modifying);
+        if(!isOpen && s) {
+            delete s.modifying;
+        }
+        setOpenDeleteSubactivityModal(false);
     }
 
     const addSubactivity = (activity) => {
@@ -194,8 +253,10 @@ const DayPage = () => {
                 </Grid>
                 <Grid item xs={0} md={2} />
             </Grid>
-            <ActivityModal open={openActivityModal} setOpen={setOpenActivityModal} provideActivity={provideActivity} initialValues={activityInitialValues} />
-            <SubactivityModal open={openSubactivityModal} setOpen={setOpenSubactivityModal} provideSubactivity={provideSubactivity} initialValues={subactivityInitialValues} />
+            <ActivityModal open={openActivityModal} setOpen={closeActivityModal} provideActivity={provideActivity} initialValues={activityInitialValues} />
+            <SubactivityModal open={openSubactivityModal} setOpen={closeSubactivityModal} provideSubactivity={provideSubactivity} initialValues={subactivityInitialValues} />
+            <ConfirmModal open={openDeleteActivityModal} setOpen={closeDeleteActivityModal} title="Eliminare Attività?" description={deleteDescription} confirmFn={confirmRemoveActivity} />
+            <ConfirmModal open={openDeleteSubactivityModal} setOpen={closeDeleteSubactivityModal} title="Eliminare Sottoattività?" description={deleteDescription} confirmFn={confirmRemoveSubactivity} />
         </>
     );
 }
