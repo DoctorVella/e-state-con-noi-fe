@@ -20,7 +20,6 @@ const ScorePage = () => {
     const [openScoreModal, setOpenScoreModal] = useState(false);
     const [openDeleteScoreModal, setOpenDeleteScoreModal] = useState(false);
     const [deleteDescription, setDeleteDescription] = useState("");
-    const [scoreInitialValues, setScoreInitialValues] = useState({});
     const [fetch, setFetch] = useState(0);
 
     const fetchDay = async (day) => {
@@ -37,7 +36,6 @@ const ScorePage = () => {
     }, [dayDate])
 
     const addScore = (activity) => {
-        setScoreInitialValues({});
         activity.modifying = true;
         setOpenScoreModal(true);
     }
