@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-const ScoreModal = ({ open, setOpen, provideScore, initialValues }) => {
+const ScoreModal = ({ open, setOpen, provideScore }) => {
     const theme = useTheme();
     const isLargeScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -13,12 +13,11 @@ const ScoreModal = ({ open, setOpen, provideScore, initialValues }) => {
     })
 
     const { handleSubmit, control, reset } = useForm({
-        defaultValues: initialValues,
         resolver: yupResolver(validationSchema)
     })
 
     useEffect(() => {
-        reset(initialValues);
+        reset();
     }, [open])
 
     const onSubmit = (values) => {
