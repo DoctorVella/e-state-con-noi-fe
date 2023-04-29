@@ -54,8 +54,9 @@ const ScoreModal = ({ open, setOpen, provideScore }) => {
                                     fullWidth
                                     label="Punteggio Azzurri"
                                     type="number"
+                                    number
                                     value={field.value}
-                                    onChange={field.onChange}
+                                    onChange={(event) => field.onChange(+event.target.value)}
                                     error={!!fieldState.error}
                                     helperText={fieldState.error?.message}
                                 />
@@ -72,7 +73,7 @@ const ScoreModal = ({ open, setOpen, provideScore }) => {
                                     type="number"
                                     number
                                     value={field.value}
-                                    onChange={field.onChange}
+                                    onChange={(event) => field.onChange(+event.target.value)}
                                     error={!!fieldState.error}
                                     helperText={fieldState.error?.message}
                                 />
@@ -89,7 +90,7 @@ const ScoreModal = ({ open, setOpen, provideScore }) => {
                                     type="number"
                                     number
                                     value={field.value}
-                                    onChange={field.onChange}
+                                    onChange={(event) => field.onChange(+event.target.value)}
                                     error={!!fieldState.error}
                                     helperText={fieldState.error?.message}
                                 />
@@ -106,7 +107,7 @@ const ScoreModal = ({ open, setOpen, provideScore }) => {
                                     type="number"
                                     number
                                     value={field.value}
-                                    onChange={field.onChange}
+                                    onChange={(event) => field.onChange(+event.target.value)}
                                     error={!!fieldState.error}
                                     helperText={fieldState.error?.message}
                                 />

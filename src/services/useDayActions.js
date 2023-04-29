@@ -30,6 +30,19 @@ const useDayActions = () => {
         }
     }
 
+    const findDayTotal = async () => {
+        try{
+            setLoading(true);
+            let res = await axiosInstance.get("/day-total");
+            setLoading(false);
+            return res.data;
+        }catch(e) {
+            setLoading(false);
+            console.log(e);
+            return false;
+        }
+    }
+
     const createUpdateDay = async (day,activities) => {
         let data = {day: day, activities: activities};
         try {
@@ -47,6 +60,7 @@ const useDayActions = () => {
     return {
         findDayList,
         findDay,
+        findDayTotal,
         createUpdateDay
     };
 }

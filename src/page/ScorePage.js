@@ -22,6 +22,9 @@ const ScorePage = () => {
     const [openDeleteScoreModal, setOpenDeleteScoreModal] = useState(false);
     const [deleteDescription, setDeleteDescription] = useState("");
     const [fetch, setFetch] = useState(0);
+    const [singleDayTotals, setSingleDayTotals] = useState([]);
+    const [dayTotals, setDayTotals] = useState([]);
+    const TOTAL_KEY = "total";
 
     const formatDayDate = (str) => {
         let date = new Date(str);
@@ -40,9 +43,16 @@ const ScorePage = () => {
     }, [])
 
     const fetchDay = async (day) => {
-        let res = await dayActions.findDay(day);
-        if (res) {
-            setActivities(res.activities);
+        if(day !== TOTAL_KEY) {
+            let res = await dayActions.findDay(day);
+            if (res) {
+                setActivities(res.activities);
+            }
+        }else{
+            let res = await dayActions.findDayTotal();
+            if(res) {
+                setDayTotals(res);
+            }
         }
     }
 
@@ -51,6 +61,18 @@ const ScorePage = () => {
             fetchDay(dayDate);
         }
     }, [dayDate])
+
+    useEffect(() => {
+        let totals = new Map();
+        activities?.forEach(a => {
+            a.scoreList?.forEach(s => {
+                s.teamScores.forEach(ts => {
+                    totals.set(ts.team, totals.has(ts.team) ? (totals.get(ts.team)+ts.score) : ts.score);
+                });
+            });
+        });
+        setSingleDayTotals(totals);
+    }, [activities])
 
     const addScore = (activity) => {
         activity.modifying = true;
@@ -121,11 +143,12 @@ const ScorePage = () => {
                     onChange={e => { setDayDate(e.target.value) }}
                 >
                     {dayList?.map(d => <MenuItem key={d} value={d}>{formatDayDate(d)}</MenuItem>)}
+                    <MenuItem key={TOTAL_KEY} value={TOTAL_KEY}>Totale</MenuItem> 
                 </TextField>
             </Grid>
             <Grid item xs={0} md={6} />
             <Grid item xs={0} md={2} />
-            {dayDate ?
+            {dayDate && dayDate !== TOTAL_KEY ?
                 <Grid container item>
                     <Grid item xs={0} md={2} />
                     {isLargeScreen ?
@@ -166,6 +189,15 @@ const ScorePage = () => {
                                     <Typography>{s.teamScores.find(ts => ts.team === VERDI_TEAM_NAME)?.score}</Typography>
                                 </Grid>
                             </Grid>))}
+                            {singleDayTotals?.size > 0 ? <Grid container item rowSpacing={1}>
+                                <Grid item md={12}><div className="Divider" /></Grid>
+                                <Grid item md={4}><Typography>Totale di giornata</Typography></Grid>
+                                <Grid item md={2}><Typography>{singleDayTotals.get(AZZURRI_TEAM_NAME)}</Typography></Grid>
+                                <Grid item md={2}><Typography>{singleDayTotals.get(GIALLI_TEAM_NAME)}</Typography></Grid>
+                                <Grid item md={2}><Typography>{singleDayTotals.get(ROSSI_TEAM_NAME)}</Typography></Grid>
+                                <Grid item md={2}><Typography>{singleDayTotals.get(VERDI_TEAM_NAME)}</Typography></Grid>
+                                <Grid item md={12}><div className="Divider" /></Grid>
+                            </Grid> : null}
                             {activities.map(a => <Grid container item rowSpacing={1}>
                                 <Grid item md={4}>
                                     <Typography>{ACTIVITY_TYPES.get(a.type).label} - {a.name}</Typography>
@@ -203,6 +235,29 @@ const ScorePage = () => {
                                         label={"Verdi: " + s.teamScores.find(ts => ts.team === VERDI_TEAM_NAME)?.score} />
                                 </Grid> : null}
                             </Grid>))}
+                            {singleDayTotals?.size > 0 ? <Grid container item rowSpacing={1} xs={12}>
+                                <Grid item xs={12}><div className="Divider" /></Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant="h6">Totale di giornata</Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(AZZURRI_TEAM_NAME), color: "white" }} 
+                                        label={"Azzurri: " + singleDayTotals.get(AZZURRI_TEAM_NAME)} />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(GIALLI_TEAM_NAME), color: "white" }} 
+                                        label={"Gialli: " + singleDayTotals.get(GIALLI_TEAM_NAME)} />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(ROSSI_TEAM_NAME), color: "white" }} 
+                                        label={"Rossi: " + singleDayTotals.get(ROSSI_TEAM_NAME)} />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(VERDI_TEAM_NAME), color: "white" }} 
+                                        label={"Verdi: " + singleDayTotals.get(VERDI_TEAM_NAME)} />
+                                </Grid>
+                                <Grid item xs={12}><div className="Divider" /></Grid>
+                            </Grid> : null}
                             {activities.map(a => <Grid container item rowSpacing={1} xs={12}>
                                 <Grid item xs={12}>
                                     <Typography variant="h6">{ACTIVITY_TYPES.get(a.type).label}</Typography>
@@ -210,6 +265,68 @@ const ScorePage = () => {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Button fullWidth onClick={() => { addScore(a) }}>Aggiungi punteggio</Button>
+                                </Grid>
+                            </Grid>)}
+                        </Grid>
+                    }
+                    <Grid item xs={0} md={2} />
+                </Grid> : null}
+                {dayDate === TOTAL_KEY ? <Grid container item>
+                    <Grid item xs={0} md={2} />
+                    {isLargeScreen ? 
+                        <Grid container item rowSpacing={1} md={8}>
+                            <Grid item md={4}>
+                                <Typography variant="h6">Giorno:</Typography>
+                            </Grid>
+                            <Grid item md={2}>
+                                <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(AZZURRI_TEAM_NAME), color: "white" }} label="Azzurri:" />
+                            </Grid>
+                            <Grid item md={2}>
+                                <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(GIALLI_TEAM_NAME), color: "white" }} label="Gialli:" />
+                            </Grid>
+                            <Grid item md={2}>
+                                <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(ROSSI_TEAM_NAME), color: "white" }} label="Rossi:" />
+                            </Grid>
+                            <Grid item md={2}>
+                                <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(VERDI_TEAM_NAME), color: "white" }} label="Verdi:" />
+                            </Grid>
+                            {dayTotals.map(d => <Grid container item rowSpacing={1}>
+                                {d.day === TOTAL_KEY ? <Grid item md={12}><div className="Divider" /></Grid> : null}
+                                <Grid item md={4}><Typography>{d.day === TOTAL_KEY ? "TOTALE" : formatDayDate(d.day)}</Typography></Grid>
+                                <Grid item md={2}>
+                                    <Typography>{d.teamScores.find(ts => ts.team === AZZURRI_TEAM_NAME)?.score}</Typography>
+                                </Grid>
+                                <Grid item md={2}>
+                                    <Typography>{d.teamScores.find(ts => ts.team === GIALLI_TEAM_NAME)?.score}</Typography>
+                                </Grid>
+                                <Grid item md={2}>
+                                    <Typography>{d.teamScores.find(ts => ts.team === ROSSI_TEAM_NAME)?.score}</Typography>
+                                </Grid>
+                                <Grid item md={2}>
+                                    <Typography>{d.teamScores.find(ts => ts.team === VERDI_TEAM_NAME)?.score}</Typography>
+                                </Grid>
+                            </Grid>)}
+                        </Grid> : <Grid container item rowSpacing={1} xs={12}>
+                            {dayTotals.map(d => <Grid container item rowSpacing={1} xs={12}>
+                                {d.day === TOTAL_KEY ? <Grid item xs={12}><div className="Divider" /></Grid> : null}
+                                <Grid item xs={12}>
+                                    <Typography variant="h6">{d.day === TOTAL_KEY ? "TOTALE" : formatDayDate(d.day)}</Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(AZZURRI_TEAM_NAME), color: "white" }} 
+                                        label={"Azzurri: " + d.teamScores.find(ts => ts.team === AZZURRI_TEAM_NAME)?.score} />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(GIALLI_TEAM_NAME), color: "white" }} 
+                                        label={"Gialli: " + d.teamScores.find(ts => ts.team === GIALLI_TEAM_NAME)?.score} />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(ROSSI_TEAM_NAME), color: "white" }} 
+                                        label={"Rossi: " + d.teamScores.find(ts => ts.team === ROSSI_TEAM_NAME)?.score} />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(VERDI_TEAM_NAME), color: "white" }} 
+                                        label={"Verdi: " + d.teamScores.find(ts => ts.team === VERDI_TEAM_NAME)?.score} />
                                 </Grid>
                             </Grid>)}
                         </Grid>
