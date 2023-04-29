@@ -28,7 +28,7 @@ function App() {
                 <Typography variant='title'>E...STATE CON NOI</Typography>
                 <Typography variant='h2'>parrocchia Santa Fara</Typography>
               </Box>
-              <BrowserRouter>
+              <BrowserRouter basename="e-state-con-noi-fe">
                 <Routes>
                   <Route path="/iscrittore" element={<IscrittorePage />} />
                   <Route path="/admin" element={<AdminPage />} />
