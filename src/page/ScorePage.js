@@ -3,7 +3,7 @@ import SectionHeader from "../components/SectionHeader";
 import useDayActions from "../services/useDayActions";
 import { useEffect, useState } from "react";
 import { getTeamColors } from "../util/MuiTheme";
-import { ACTIVITY_TYPES, AZZURRI_TEAM_NAME } from "../util/Constants";
+import { ACTIVITY_TYPES, AZZURRI_TEAM_NAME, WEEK_DAY } from "../util/Constants";
 import { GIALLI_TEAM_NAME } from "../util/Constants";
 import { ROSSI_TEAM_NAME } from "../util/Constants";
 import { VERDI_TEAM_NAME } from "../util/Constants";
@@ -17,10 +17,27 @@ const ScorePage = () => {
     const dayActions = useDayActions();
     const [activities, setActivities] = useState([]);
     const [dayDate, setDayDate] = useState("");
+    const [dayList, setDayList] = useState([]);
     const [openScoreModal, setOpenScoreModal] = useState(false);
     const [openDeleteScoreModal, setOpenDeleteScoreModal] = useState(false);
     const [deleteDescription, setDeleteDescription] = useState("");
     const [fetch, setFetch] = useState(0);
+
+    const formatDayDate = (str) => {
+        let date = new Date(str);
+        return WEEK_DAY[date.getDay()-1] + " " + date.toLocaleDateString("it-IT");
+    }
+
+    const fetchDayList = async () => {
+        let res = await dayActions.findDayList();
+        if(res) {
+            setDayList(res);
+        }
+    }
+
+    useEffect(() => {
+        fetchDayList();
+    }, [])
 
     const fetchDay = async (day) => {
         let res = await dayActions.findDay(day);
@@ -64,6 +81,7 @@ const ScorePage = () => {
         delete activity.modifying;
         activity.scoreList = activity.scoreList.filter(s => !s.modifying);
         setFetch(fetch+1);
+        dayActions.createUpdateDay(dayDate,activities);
     }
 
     const provideScore = (values) => {
@@ -72,16 +90,22 @@ const ScorePage = () => {
         if (!activity.scoreList) {
             activity.scoreList = [];
         }
-        activity.scoreList.push({
-            description: values.description,
-            teamScores: new Map([
-                [AZZURRI_TEAM_NAME, values.azzurriScore],
-                [GIALLI_TEAM_NAME, values.gialliScore],
-                [ROSSI_TEAM_NAME, values.rossiScore],
-                [VERDI_TEAM_NAME, values.verdiScore]
-            ])
-        });
+        let teamScores = [];
+        if(values.azzurriScore) {
+            teamScores.push({team: AZZURRI_TEAM_NAME, score: values.azzurriScore});
+        }
+        if(values.gialliScore) {
+            teamScores.push({team: GIALLI_TEAM_NAME, score: values.gialliScore});
+        }
+        if(values.rossiScore) {
+            teamScores.push({team: ROSSI_TEAM_NAME, score: values.rossiScore});
+        }
+        if(values.verdiScore) {
+            teamScores.push({team: VERDI_TEAM_NAME, score: values.verdiScore});
+        }
+        activity.scoreList.push({description: values.description, teamScores: teamScores});
         setFetch(fetch + 1);
+        dayActions.createUpdateDay(dayDate,activities);
     }
 
     return (<>
@@ -96,7 +120,7 @@ const ScorePage = () => {
                     value={dayDate}
                     onChange={e => { setDayDate(e.target.value) }}
                 >
-                    <MenuItem key={"2023-03-31"} value={"2023-03-31"}>Test</MenuItem>
+                    {dayList?.map(d => <MenuItem key={d} value={d}>{formatDayDate(d)}</MenuItem>)}
                 </TextField>
             </Grid>
             <Grid item xs={0} md={6} />
@@ -130,16 +154,16 @@ const ScorePage = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid item md={2}>
-                                    <Typography>{s.teamScores.get(AZZURRI_TEAM_NAME)}</Typography>
+                                    <Typography>{s.teamScores.find(ts => ts.team === AZZURRI_TEAM_NAME)?.score}</Typography>
                                 </Grid>
                                 <Grid item md={2}>
-                                    <Typography>{s.teamScores.get(GIALLI_TEAM_NAME)}</Typography>
+                                    <Typography>{s.teamScores.find(ts => ts.team === GIALLI_TEAM_NAME)?.score}</Typography>
                                 </Grid>
                                 <Grid item md={2}>
-                                    <Typography>{s.teamScores.get(ROSSI_TEAM_NAME)}</Typography>
+                                    <Typography>{s.teamScores.find(ts => ts.team === ROSSI_TEAM_NAME)?.score}</Typography>
                                 </Grid>
                                 <Grid item md={2}>
-                                    <Typography>{s.teamScores.get(VERDI_TEAM_NAME)}</Typography>
+                                    <Typography>{s.teamScores.find(ts => ts.team === VERDI_TEAM_NAME)?.score}</Typography>
                                 </Grid>
                             </Grid>))}
                             {activities.map(a => <Grid container item rowSpacing={1}>
@@ -153,7 +177,7 @@ const ScorePage = () => {
                                 <Grid item md={2} />
                             </Grid>)}
                         </Grid> : <Grid container item rowSpacing={1} xs={12}>
-                            {activities.map(a => a.scoreList?.map(s => <Grid container item rowSpacing={1} xs={12}>
+                            {activities.map(a => a.scoreList?.map(s => <Grid key={s.description} container item rowSpacing={1} xs={12}>
                                 <Grid item xs={12}>
                                     <Typography variant="h6">{ACTIVITY_TYPES.get(a.type).label}</Typography>
                                     <Typography variant="h6">{a.name}</Typography>
@@ -162,17 +186,21 @@ const ScorePage = () => {
                                         <IconButton color="primary" onClick={() => { removeScore(a,s) }}><DeleteOutline/></IconButton>
                                     </Typography>
                                 </Grid>
-                                {s.teamScores.get(AZZURRI_TEAM_NAME) ? <Grid item xs={12}>
-                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(AZZURRI_TEAM_NAME), color: "white" }} label={"Azzurri: " + s.teamScores.get(AZZURRI_TEAM_NAME)} />
+                                {s.teamScores.find(ts => ts.team === AZZURRI_TEAM_NAME) ? <Grid item xs={12}>
+                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(AZZURRI_TEAM_NAME), color: "white" }} 
+                                        label={"Azzurri: " + s.teamScores.find(ts => ts.team === AZZURRI_TEAM_NAME)?.score} />
                                 </Grid> : null}
-                                {s.teamScores.get(GIALLI_TEAM_NAME) ? <Grid item xs={12}>
-                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(GIALLI_TEAM_NAME), color: "white" }} label={"Gialli: " + s.teamScores.get(GIALLI_TEAM_NAME)} />
+                                {s.teamScores.find(ts => ts.team === GIALLI_TEAM_NAME) ? <Grid item xs={12}>
+                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(GIALLI_TEAM_NAME), color: "white" }} 
+                                        label={"Gialli: " + s.teamScores.find(ts => ts.team === GIALLI_TEAM_NAME)?.score} />
                                 </Grid> : null}
-                                {s.teamScores.get(ROSSI_TEAM_NAME) ? <Grid item xs={12}>
-                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(ROSSI_TEAM_NAME), color: "white" }} label={"Rossi: " + s.teamScores.get(ROSSI_TEAM_NAME)} />
+                                {s.teamScores.find(ts => ts.team === ROSSI_TEAM_NAME) ? <Grid item xs={12}>
+                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(ROSSI_TEAM_NAME), color: "white" }} 
+                                        label={"Rossi: " + s.teamScores.find(ts => ts.team === ROSSI_TEAM_NAME)?.score} />
                                 </Grid> : null}
-                                {s.teamScores.get(VERDI_TEAM_NAME) ? <Grid item xs={12}>
-                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(VERDI_TEAM_NAME), color: "white" }} label={"Verdi: " + s.teamScores.get(VERDI_TEAM_NAME)} />
+                                {s.teamScores.find(ts => ts.team === VERDI_TEAM_NAME) ? <Grid item xs={12}>
+                                    <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(VERDI_TEAM_NAME), color: "white" }} 
+                                        label={"Verdi: " + s.teamScores.find(ts => ts.team === VERDI_TEAM_NAME)?.score} />
                                 </Grid> : null}
                             </Grid>))}
                             {activities.map(a => <Grid container item rowSpacing={1} xs={12}>

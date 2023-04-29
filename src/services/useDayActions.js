@@ -4,6 +4,19 @@ import { GlobalContext } from "../contexts/GlobalContext";
 const useDayActions = () => {
     const { setLoading, axiosInstance } = useContext(GlobalContext);
 
+    const findDayList = async () => {
+        try{
+            setLoading(true);
+            let res = await axiosInstance.get("/days");
+            setLoading(false);
+            return res.data;
+        }catch(e) {
+            setLoading(false);
+            console.log(e);
+            return false;
+        }
+    }
+
     const findDay = async (day) => {
         try {
             setLoading(true);
@@ -32,6 +45,7 @@ const useDayActions = () => {
     }
 
     return {
+        findDayList,
         findDay,
         createUpdateDay
     };

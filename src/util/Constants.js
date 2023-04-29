@@ -32,6 +32,8 @@ export const SUBACTIVITY_TYPE_KEY_MANCHE_ALL_VS_ALL = "MANCHE_ALL_VS_ALL";
 export const SUBACTIVITY_TYPE_KEY_SPORT = "SPORT";
 export const SUBACTIVITY_TYPE_KEY_RAPPRESENTAZIONE = "RAPPRESENTAZIONE";
 
+export const WEEK_DAY = ["Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato","Domenica"];
+
 export const SUBACTIVITY_TYPES = new Map([
     [
         SUBACTIVITY_TYPE_KEY_MINIGIOCO,
