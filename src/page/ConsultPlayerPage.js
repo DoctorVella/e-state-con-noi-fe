@@ -10,6 +10,7 @@ const ConsultPlayerPage = () => {
     const { findPlayer } = usePlayerActions();
     const [players, setPlayers] = useState([]);
     const [shownPlayers, setShownPlayers] = useState([]);
+    const [feeTotal, setFeeTotal] = useState(0);
     const [searchInput, setSearchInput] = useState("");
     const [pageSize, setPageSize] = useState(10);
     const theme = useTheme();
@@ -21,6 +22,7 @@ const ConsultPlayerPage = () => {
         if (res) {
             setPlayers(res);
             setShownPlayers(res);
+            setFeeTotal(computeFeeTotal(res));
         }
     }
 
@@ -32,6 +34,12 @@ const ConsultPlayerPage = () => {
         setShownPlayers(players.filter(p => (p.name + " " + p.surname).includes(searchInput)))
     },[searchInput])
 
+    const computeFeeTotal = (res) => {
+        let total = 0;
+        res?.forEach(p => { total += p.fee ? p.fee : 0 });
+        return total;
+    }
+
     const mdColumns = [
         {
             field: "name",
@@ -42,6 +50,13 @@ const ConsultPlayerPage = () => {
         {
             field: "age",
             headerName: "Età",
+            flex: 1
+        },
+        {
+            field: "fee",
+            headerName: "Quota",
+            valueGetter: (params) => {return params.row.fee},
+            description: "Totale corrente: " + feeTotal,
             flex: 1
         },
         {
