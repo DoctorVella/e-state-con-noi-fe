@@ -27,7 +27,7 @@ const ViewPlayerModal = ({ open, setOpen }) => {
     return (
         <Dialog open={open}>
             <DialogTitle>
-                Ecco i partecipanti che hai iscritto:
+                {players && players.length > 0 ? "Ecco i partecipanti che hai iscritto:" : "Non hai iscritto nessun partecipante."}
             </DialogTitle>
             <DialogContent style={{ width: isLargeScreen ? "400px" : "300px" }}>
                 {players && players.length > 0 ?
