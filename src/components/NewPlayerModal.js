@@ -24,7 +24,7 @@ const NewPlayerModal = ({ open, setOpen }) => {
     const validationSchema = Yup.object({
         name: Yup.string().required("obbligatorio"),
         surname: Yup.string().required("obbligatorio"),
-        age: Yup.number().required("obbligatorio"),
+        age: Yup.number().required("obbligatorio").min(6,"Età minima ammessa: 6 anni").max(13,"Età massima ammessa: 13 anni"),
         phone: Yup.string().required("obbligatorio"),
         weekNumber: Yup.number().required("obbligatorio"),
         notes: Yup.string().nullable()
