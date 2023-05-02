@@ -11,7 +11,8 @@ const Draggable = (props) => {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
         backgroundColor: "inherit",
         borderRadius: "5px",
-        padding: "0px 30px 0px 30px"
+        padding: "0px 30px 0px 30px",
+        touchAction: "none"
     } : undefined;
 
     return (
