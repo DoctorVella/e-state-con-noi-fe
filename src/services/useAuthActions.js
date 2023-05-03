@@ -47,9 +47,14 @@ const useAuthActions = () => {
         }
     };
 
+    const awake = () => {
+        axiosInstance.get("/foo");
+    }
+
     return {
         login,
-        register
+        register,
+        awake
     };
 }
 

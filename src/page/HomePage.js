@@ -1,9 +1,19 @@
 import { Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../contexts/GlobalContext';
+import useAuthActions from '../services/useAuthActions';
 
 const HomePage = () => {
     const { setOpenLoginModal, setOpenRegisterModal } = useContext(GlobalContext);
+    const [awaken, setAwaken] = useState(false);
+    const authActions = useAuthActions();
+
+    useEffect(() => {
+        if(!awaken) {
+            authActions.awake();
+            setAwaken(true);
+        }
+    },[])
 
     return (
         <>
