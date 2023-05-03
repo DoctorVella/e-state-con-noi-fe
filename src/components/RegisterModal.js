@@ -27,7 +27,7 @@ const RegisterModal = () => {
         username: Yup.string().required("obbligatorio"),
         name: Yup.string().required("obbligatorio"),
         surname: Yup.string().required("obbligatorio"),
-        password: Yup.string().required("obbligatorio").test("password","Password non corrispondenti", (value, context) => {
+        password: Yup.string().required("obbligatorio").min(6,"Almeno 6 caratteri").test("password","Password non corrispondenti", (value, context) => {
             const {confirmPassword} = context?.parent;
             return value === confirmPassword;
         }),
