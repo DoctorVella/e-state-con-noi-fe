@@ -1,10 +1,11 @@
-import { Add, Info } from "@mui/icons-material";
+import { Add, FileDownload, Info } from "@mui/icons-material";
 import { Button, Grid, IconButton, TextField, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
 import usePlayerActions from "../services/usePlayerActions";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import SectionHeader from "../components/SectionHeader";
+import * as XLSX from 'xlsx';
 
 const ConsultPlayerPage = () => {
     const { findPlayer } = usePlayerActions();
@@ -88,12 +89,40 @@ const ConsultPlayerPage = () => {
         }
     ]
 
+    const generateExcel = () => {
+        let rows = players?.map(p => {
+            return {
+                "Nome": p.name,
+                "Cognome": p.surname,
+                "Età": p.age,
+                "Telefono": p.phone,
+                "Numero di settimane": p.weekNumber,
+                "Ha un fratello": p.hasBrother ? "SI" : "NO",
+                "E' uno sponsor": p.isSponsor ? "SI" : "NO",
+                "Tariffa speciale": p.isSpecial ? "SI" : "NO",
+                "Ha pagato": p.isPayed ? "SI" : "NO",
+                "Quota": p.fee,
+                "Squadra": p.team,
+                "Note": p.notes,
+            }
+        })
+        const worksheet = XLSX.utils.json_to_sheet(rows);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Partecipanti");
+        let colsWidth = [];
+        for(let i=0; i<12; i++) {
+            colsWidth.push({ wch: 15 });
+        }
+        worksheet["!cols"] = colsWidth;
+        XLSX.writeFile(workbook, "Partecipanti.xlsx");
+    }
+
     return (
         <>
             <Grid container rowSpacing={2} columnSpacing={2}>
                 <SectionHeader title="Gestione Partecipanti" />
                 <Grid item xs={0} md={2} />
-                <Grid item xs={12} md={7} >
+                <Grid item xs={12} md={6} >
                     <TextField 
                         fullWidth
                         variant="outlined"
@@ -105,6 +134,11 @@ const ConsultPlayerPage = () => {
                 <Grid item xs={12} md={1} >
                     <Button fullWidth sx={{height: '100%'}} onClick={() => {navigate("/players/create")}}>
                         <Add />
+                    </Button>
+                </Grid>
+                <Grid item xs={12} md={1} >
+                    <Button fullWidth sx={{height: '100%'}} onClick={generateExcel}>
+                        <FileDownload />
                     </Button>
                 </Grid>
                 <Grid item xs={1} md={2} />
