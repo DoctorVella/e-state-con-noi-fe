@@ -25,7 +25,7 @@ const NewPlayerModal = ({ open, setOpen }) => {
         name: Yup.string().required("obbligatorio"),
         surname: Yup.string().required("obbligatorio"),
         age: Yup.number().required("obbligatorio").min(6,"Età minima ammessa: 6 anni").max(13,"Età massima ammessa: 13 anni"),
-        phone: Yup.string().required("obbligatorio"),
+        phone: Yup.string().required("obbligatorio").min(8, "Almeno 8 caratteri").max(15, "Massimo 15 caratteri"),
         weekNumber: Yup.number().required("obbligatorio"),
         notes: Yup.string().nullable()
     })
@@ -143,7 +143,7 @@ const NewPlayerModal = ({ open, setOpen }) => {
                                     render={({ field, fieldState }) => (
                                         <TextField
                                             fullWidth
-                                            label="Eventuali note"
+                                            label="Eventuali note (intolleranze, allergie,...)"
                                             value={field.value}
                                             onChange={field.onChange}
                                             error={!!fieldState.error}

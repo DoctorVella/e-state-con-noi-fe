@@ -72,7 +72,7 @@ const ScorePage = () => {
             });
         });
         setSingleDayTotals(totals);
-    }, [activities])
+    }, [activities,singleDayTotals])
 
     const addScore = (activity) => {
         activity.modifying = true;

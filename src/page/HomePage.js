@@ -21,10 +21,11 @@ const HomePage = () => {
                 <Grid item xs={0} md={2} />
                 <Grid item xs={12} md={8}>
                     <Typography variant='paragraph' paragraph>
-                        Benvenuto sul sito di E...State Con Noi, il campo estivo per ragazzi organizzato dalla parrocchia Santa Fara. Il campo estivo, dedicato ai ragazzi fra i 7 e i 14 anni, si terrà nei seguenti giorni:<br />
+                        Benvenuto sul sito di E...State Con Noi, il campo estivo per ragazzi organizzato dalla parrocchia Santa Fara. Il campo estivo, dedicato ai ragazzi fra i 6 e i 13 anni, si terrà nei seguenti giorni:<br />
                         - da lunedì 26 giugno a venerdì 30 giugno<br />
-                        - da lunedì 2 luglio a venerdì 7 luglio<br />
-                        Dalle ore 16.00 alle ore 20.00.
+                        - da lunedì 3 luglio a venerdì 7 luglio<br />
+                        Dalle ore 16.00 alle ore 20.00.<br /><br />
+                        E' possibile iscrivere i partecipanti domenica 11, 18 o 25 giugno dalle ore 11.00 alle ore 13.00 in parrocchia.
                     </Typography>
                 </Grid>
                 <Grid item xs={0} md={2} />
