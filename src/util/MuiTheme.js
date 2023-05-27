@@ -184,7 +184,7 @@ muiTheme.typography.h3 = {
 };
 
 muiTheme.typography.paragraph = {
-    fontSize: '20px',
+    fontSize: '18px',
     [muiTheme.breakpoints.up('md')]: {
       fontSize: '24px',
     },

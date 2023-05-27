@@ -10,6 +10,7 @@ import { VERDI_TEAM_NAME } from "../util/Constants";
 import ScoreModal from "../components/ScoreModal";
 import ConfirmModal from "../components/ConfirmModal";
 import { DeleteOutline } from "@mui/icons-material";
+import AdminPageContainer from "../components/AdminPageContainer";
 
 const ScorePage = () => {
     const theme = useTheme();
@@ -130,7 +131,7 @@ const ScorePage = () => {
         dayActions.createUpdateDay(dayDate,activities);
     }
 
-    return (<>
+    return (<AdminPageContainer>
         <Grid container spacing={2}>
             <SectionHeader title="Gestione Punteggio" />
             <Grid item xs={0} md={2} />
@@ -336,7 +337,7 @@ const ScorePage = () => {
         </Grid>
         <ScoreModal open={openScoreModal} setOpen={setOpenScoreModal} provideScore={provideScore} />
         <ConfirmModal open={openDeleteScoreModal} setOpen={closeDeleteScoreModal} title="Eliminare Punteggio?" description={deleteDescription} confirmFn={confirmRemoveScore} />
-    </>);
+    </AdminPageContainer>);
 }
 
 export default ScorePage;

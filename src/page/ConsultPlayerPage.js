@@ -6,6 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 import SectionHeader from "../components/SectionHeader";
 import * as XLSX from 'xlsx';
+import AdminPageContainer from "../components/AdminPageContainer";
 
 const ConsultPlayerPage = () => {
     const { findPlayer } = usePlayerActions();
@@ -33,7 +34,7 @@ const ConsultPlayerPage = () => {
 
     useEffect(() => {
         setShownPlayers(players.filter(p => (p.name + " " + p.surname).includes(searchInput)))
-    },[searchInput])
+    }, [searchInput])
 
     const computeFeeTotal = (res) => {
         let total = 0;
@@ -45,7 +46,7 @@ const ConsultPlayerPage = () => {
         {
             field: "name",
             headerName: "Nome",
-            valueGetter: (params) => {return params.row.name + " " + params.row.surname},
+            valueGetter: (params) => { return params.row.name + " " + params.row.surname },
             flex: 2
         },
         {
@@ -56,20 +57,20 @@ const ConsultPlayerPage = () => {
         {
             field: "fee",
             headerName: "Quota",
-            valueGetter: (params) => {return params.row.fee},
+            valueGetter: (params) => { return params.row.fee },
             description: "Totale corrente: " + feeTotal,
             flex: 1
         },
         {
             field: "team",
             headerName: "Squadra",
-            valueGetter: (params) => {return params.row.team ? params.row.team : "N/A"},
+            valueGetter: (params) => { return params.row.team ? params.row.team : "N/A" },
             flex: 1
         },
         {
             field: "action",
             headerName: "Azioni",
-            renderCell: (params) => {return <IconButton color="primary" onClick={() => {navigate("/players/view/" + params.row._id)}}><Info/></IconButton>},
+            renderCell: (params) => { return <IconButton color="primary" onClick={() => { navigate("/players/view/" + params.row._id) }}><Info /></IconButton> },
             flex: 1
         }
     ]
@@ -78,13 +79,13 @@ const ConsultPlayerPage = () => {
         {
             field: "name",
             headerName: "Nome",
-            valueGetter: (params) => {return params.row.name + " " + params.row.surname},
+            valueGetter: (params) => { return params.row.name + " " + params.row.surname },
             flex: 2
         },
         {
             field: "action",
             headerName: "Azioni",
-            renderCell: (params) => {return <IconButton color="primary" onClick={() => {navigate("/players/view/" + params.row._id)}}><Info/></IconButton>},
+            renderCell: (params) => { return <IconButton color="primary" onClick={() => { navigate("/players/view/" + params.row._id) }}><Info /></IconButton> },
             flex: 1
         }
     ]
@@ -110,7 +111,7 @@ const ConsultPlayerPage = () => {
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Partecipanti");
         let colsWidth = [];
-        for(let i=0; i<12; i++) {
+        for (let i = 0; i < 12; i++) {
             colsWidth.push({ wch: 15 });
         }
         worksheet["!cols"] = colsWidth;
@@ -118,33 +119,33 @@ const ConsultPlayerPage = () => {
     }
 
     return (
-        <>
+        <AdminPageContainer>
             <Grid container rowSpacing={2} columnSpacing={2}>
                 <SectionHeader title="Gestione Partecipanti" />
                 <Grid item xs={0} md={2} />
                 <Grid item xs={12} md={6} >
-                    <TextField 
+                    <TextField
                         fullWidth
                         variant="outlined"
                         label="Cerca..."
                         value={searchInput}
-                        onChange={(e) => {setSearchInput(e.target.value)}}
+                        onChange={(e) => { setSearchInput(e.target.value) }}
                     />
                 </Grid>
                 <Grid item xs={12} md={1} >
-                    <Button fullWidth sx={{height: '100%'}} onClick={() => {navigate("/players/create")}}>
+                    <Button fullWidth sx={{ height: '100%' }} onClick={() => { navigate("/players/create") }}>
                         <Add />
                     </Button>
                 </Grid>
                 <Grid item xs={12} md={1} >
-                    <Button fullWidth sx={{height: '100%'}} onClick={generateExcel}>
+                    <Button fullWidth sx={{ height: '100%' }} onClick={generateExcel}>
                         <FileDownload />
                     </Button>
                 </Grid>
                 <Grid item xs={1} md={2} />
                 <Grid item xs={0} md={2} />
                 <Grid item xs={12} md={8}>
-                    <DataGrid 
+                    <DataGrid
                         columns={isLargeScreen ? mdColumns : xsColumns}
                         rows={shownPlayers}
                         getRowId={r => r._id}
@@ -154,19 +155,19 @@ const ConsultPlayerPage = () => {
                             labelRowsPerPage: 'test'
                         }}
                         pageSize={pageSize}
-                        onPageSizeChange={(newPageSize) => {setPageSize(newPageSize)}}
-                        rowsPerPageOptions={[5,10,20]}
+                        onPageSizeChange={(newPageSize) => { setPageSize(newPageSize) }}
+                        rowsPerPageOptions={[5, 10, 20]}
                         componentsProps={{
                             pagination: {
-                              labelRowsPerPage: "Righe per pagina",
-                              labelDisplayedRows: (({from,to,count,page}) => {return from + "-" + to + " di " + count})
+                                labelRowsPerPage: "Righe per pagina",
+                                labelDisplayedRows: (({ from, to, count, page }) => { return from + "-" + to + " di " + count })
                             }
                         }}
-                        />
+                    />
                 </Grid>
                 <Grid item xs={0} md={2} />
             </Grid>
-        </>
+        </AdminPageContainer>
     );
 }
 

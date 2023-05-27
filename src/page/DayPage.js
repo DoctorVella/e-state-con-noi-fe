@@ -8,6 +8,7 @@ import useDayActions from "../services/useDayActions";
 import { ACTIVITY_TYPES, ACTIVITY_TYPE_KEY_PROVA_ANIMATORE, ACTIVITY_TYPE_KEY_STAFFETTA_1_VS_1, ACTIVITY_TYPE_KEY_STAFFETTA_1_VS_1_ACQUA, ACTIVITY_TYPE_KEY_STAFFETTA_ALL_VS_ALL, ACTIVITY_TYPE_KEY_STAFFETTA_ALL_VS_ALL_ACQUA, SUBACTIVITY_TYPES, SUBACTIVITY_TYPE_KEY_MANCHE_1_VS_1, SUBACTIVITY_TYPE_KEY_MANCHE_ALL_VS_ALL } from "../util/Constants";
 import { getTeamColors } from "../util/MuiTheme";
 import ConfirmModal from "../components/ConfirmModal";
+import AdminPageContainer from "../components/AdminPageContainer";
 
 const DayPage = () => {
     const [dayDate, setDayDate] = useState((new Date()).toISOString().split("T")[0]);
@@ -189,7 +190,7 @@ const DayPage = () => {
     }
 
     return (
-        <>
+        <AdminPageContainer>
             <Grid container spacing={2}>
                 <SectionHeader title="Gestione Giornate" />
                 <Grid item xs={0} md={2} />
@@ -257,7 +258,7 @@ const DayPage = () => {
             <SubactivityModal open={openSubactivityModal} setOpen={closeSubactivityModal} provideSubactivity={provideSubactivity} initialValues={subactivityInitialValues} />
             <ConfirmModal open={openDeleteActivityModal} setOpen={closeDeleteActivityModal} title="Eliminare Attività?" description={deleteDescription} confirmFn={confirmRemoveActivity} />
             <ConfirmModal open={openDeleteSubactivityModal} setOpen={closeDeleteSubactivityModal} title="Eliminare Sottoattività?" description={deleteDescription} confirmFn={confirmRemoveSubactivity} />
-        </>
+        </AdminPageContainer>
     );
 }
 

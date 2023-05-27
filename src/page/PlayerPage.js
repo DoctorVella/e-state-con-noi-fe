@@ -10,6 +10,7 @@ import SectionHeader from "../components/SectionHeader";
 import UpdatePlayerSuccessModal from "../components/UpdatePlayerSuccessModal";
 import usePlayerActions from "../services/usePlayerActions";
 import { DEFAULT_1W_BROTHER, DEFAULT_1W_STANDARD, DEFAULT_2W_BROTHER, DEFAULT_2W_STANDARD, PLAYER_PAGE_CREATE_MODE, PLAYER_PAGE_UPDATE_MODE, PLAYER_PAGE_VIEW_MODE } from "../util/Constants";
+import AdminPageContainer from "../components/AdminPageContainer";
 
 const PlayerPage = ({ mode }) => {
     const navigate = useNavigate();
@@ -100,7 +101,7 @@ const PlayerPage = ({ mode }) => {
         }
     }
 
-    return <>
+    return <AdminPageContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2}>
                 <SectionHeader title="Gestione Partecipanti" />
@@ -354,7 +355,7 @@ const PlayerPage = ({ mode }) => {
         </form>
         <NewPlayerSuccessModal open={openCreateSuccessModal} setOpen={setOpenCreateSuccessModal} />
         <UpdatePlayerSuccessModal open={openUpdateSuccessModal} setOpen={setOpenUpdateSuccessModal} />
-    </>
+    </AdminPageContainer>
 }
 
 export default PlayerPage;

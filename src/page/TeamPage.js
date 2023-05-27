@@ -6,6 +6,7 @@ import { DndContext } from '@dnd-kit/core';
 import TeamDroppable from "../components/TeamDroppable";
 import SectionHeader from "../components/SectionHeader";
 import { NOT_ASSIGNED_TEAM_NAME, TEAM_NAMES } from "../util/Constants";
+import AdminPageContainer from "../components/AdminPageContainer";
 
 const TeamPage = () => {
     const playerActions = usePlayerActions();
@@ -80,7 +81,7 @@ const TeamPage = () => {
         }
     }
 
-    return (<>
+    return (<AdminPageContainer>
         <DndContext onDragEnd={handleDragEnd}>
             <Grid container rowSpacing={2} columnSpacing={2}>
                 <SectionHeader title="Gestione Squadre" />
@@ -117,7 +118,7 @@ const TeamPage = () => {
                 <Button variant="contained" onClick={() => {setOpenSuccessModal(false)}}>OK</Button>
             </DialogActions>
         </Dialog>
-    </>);
+    </AdminPageContainer>);
 }
 
 export default TeamPage;

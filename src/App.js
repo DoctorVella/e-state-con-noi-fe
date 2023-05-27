@@ -23,11 +23,6 @@ function App() {
     <GlobalContextProvider>
         <ThemeProvider theme={muiTheme}>
           <div className="App">
-            <Box sx={{ p: 3 }}>
-              <Box sx={{ pb: 3 }}>
-                <Typography variant='title'>E...STATE CON NOI</Typography>
-                <Typography variant='h2'>parrocchia Santa Fara</Typography>
-              </Box>
               <BrowserRouter basename="e-state-con-noi-fe">
                 <Routes>
                   <Route path="/iscrittore" element={<IscrittorePage />} />
@@ -44,7 +39,6 @@ function App() {
                 <RegisterModal />
                 <ClientCallFailedModal />
               </BrowserRouter>
-            </Box>
             <Loader/>
           </div>
         </ThemeProvider>
