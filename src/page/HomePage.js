@@ -61,16 +61,16 @@ const HomePage = () => {
                 </AdminPageContainer> : <Paper sx={{ p: 3 }} style={{ minHeight: "100vh", backgroundImage: `url(${HomeBackground})`, backgroundSize: "cover", backgroundPosition: "center" }}>
                     <Grid container rowSpacing={2} columnSpacing={5}>
                         <Grid item xs={12}>
-                            <Box sx={{p:10}} />
+                            <Box sx={{p:11}} />
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography color="white" variant='paragraph' align='center'>
+                            <Box fontSize="18px" color="white" align='center'>
                                 Il campo estivo per ragazzi organizzato dalla parrocchia Santa Fara.<br /> 
-                                Dedicato ai ragazzi fra <Typography fontSize="20px" fontWeight="1000" color="white" display='inline'>i 7 e i 14 anni</Typography>, si terrà nei seguenti giorni:<br />
-                                - da <Typography fontSize="20px" fontWeight="1000" color="white" display='inline'>lunedì 26 giugno</Typography> a <Typography fontSize="20px" fontWeight="1000" color="white" display='inline'>venerdì 30 giugno</Typography><br />
-                                - da <Typography fontSize="20px" fontWeight="1000" color="white" display='inline'>lunedì 3 luglio</Typography> a <Typography fontSize="20px" fontWeight="1000" color="white" display='inline'>venerdì 7 luglio</Typography><br />
-                                Dalle <Typography fontSize="20px" fontWeight="1000" color="white" display='inline'>ore 16.00</Typography> alle <Typography fontSize="20px" fontWeight="1000" color="white" display='inline'>ore 20.00</Typography>.<br /><br />
-                            </Typography>
+                                Dedicato ai ragazzi fra <Typography variant='paragraph' color="white" display='inline'>i 7 e i 14 anni</Typography>, si terrà nei seguenti giorni:<br />
+                                - da <Typography variant='paragraph' color="white" display='inline'>lunedì 26 giugno</Typography> a <Typography variant='paragraph' color="white" display='inline'>venerdì 30 giugno</Typography><br />
+                                - da <Typography variant='paragraph' color="white" display='inline'>lunedì 3 luglio</Typography> a <Typography variant='paragraph' color="white" display='inline'>venerdì 7 luglio</Typography><br />
+                                Dalle <Typography variant='paragraph' color="white" display='inline'>ore 16.00</Typography> alle <Typography variant='paragraph' color="white" display='inline'>ore 20.00</Typography>.<br /><br />
+                            </Box>
                         </Grid>
                         <Grid item xs={12}>
                             <Card raised>
