@@ -46,6 +46,9 @@ const ViewPlayerModal = ({ open, setOpen }) => {
                     </Accordion>
                     ) : null
                 }
+                {players && players.length > 0 ? <Typography sx={{p: 1}}>
+                    Ti ricordiamo che l'iscrizione diventa effettiva nel momento di saldo della quota di partecipazione in parrocchia.
+                </Typography> : null}
             </DialogContent>
             <DialogActions>
                 <Button variant="contained" onClick={() => { setOpen(false) }}>OK</Button>

@@ -2,8 +2,8 @@ import { Box, Button, Card, CardActions, CardContent, Grid, Paper, Typography, u
 import { useState } from "react";
 import NewPlayerModal from "../components/NewPlayerModal";
 import ViewPlayerModal from "../components/ViewPlayerModal";
-import AdminPageContainer from "../components/AdminPageContainer";
 import IscrittoreBackground from '../img/IscrittoreBackground.png';
+import IscrittoreBackgroundDesktop from '../img/IscrittoreBackgroundDesktop.png';
 
 const IscrittorePage = () => {
     const [openNewPlayerModal, setOpenNewPlayerModal] = useState(false);
@@ -14,8 +14,11 @@ const IscrittorePage = () => {
     return (
         <>
             {isLargeScreen ?
-                <AdminPageContainer>
+                <Paper sx={{ p: 3 }} style={{ minHeight: "100vh", backgroundImage: `url(${IscrittoreBackgroundDesktop})`, backgroundSize: "cover", backgroundPosition: "center" }}>
                     <Grid container rowSpacing={2} columnSpacing={5}>
+                    <Grid item xs={12}>
+                            <Box sx={{ p: 32 }} />
+                        </Grid>
                         <Grid item xs={0} md={2} />
                         <Grid item xs={12} md={4}>
                             <Card raised>
@@ -38,11 +41,14 @@ const IscrittorePage = () => {
                             </Card>
                         </Grid>
                         <Grid item xs={0} md={2} />
+                        <Grid item xs={12}>
+                            <Box sx={{ p: 20 }} />
+                        </Grid>
                     </Grid>
-                </AdminPageContainer> : <Paper sx={{ p: 3 }} style={{ minHeight: "100vh", backgroundImage: `url(${IscrittoreBackground})`, backgroundSize: "cover", backgroundPosition: "center" }}>
+                </Paper> : <Paper sx={{ p: 3 }} style={{ minHeight: "100vh", backgroundImage: `url(${IscrittoreBackground})`, backgroundSize: "cover", backgroundPosition: "center" }}>
                     <Grid container rowSpacing={2} columnSpacing={5}>
                         <Grid item xs={12}>
-                            <Box sx={{p:22}} />
+                            <Box sx={{ p: 22 }} />
                         </Grid>
                         <Grid item xs={12}>
                             <Card raised>
@@ -65,7 +71,7 @@ const IscrittorePage = () => {
                             </Card>
                         </Grid>
                         <Grid item xs={12}>
-                            <Box sx={{p:6}} />
+                            <Box sx={{ p: 6 }} />
                         </Grid>
                     </Grid>
                 </Paper>
