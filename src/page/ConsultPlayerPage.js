@@ -33,7 +33,7 @@ const ConsultPlayerPage = () => {
     }, [])
 
     useEffect(() => {
-        setShownPlayers(players.filter(p => (p.name + " " + p.surname).includes(searchInput)))
+        setShownPlayers(players.filter(p => (p.name + " " + p.surname).toUpperCase().includes(searchInput.toUpperCase())))
     }, [searchInput])
 
     const computeFeeTotal = (res) => {
