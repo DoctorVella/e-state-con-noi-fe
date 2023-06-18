@@ -38,7 +38,7 @@ const ConsultPlayerPage = () => {
 
     const computeFeeTotal = (res) => {
         let total = 0;
-        res?.forEach(p => { total += p.fee ? p.fee : 0 });
+        res?.forEach(p => { total += p.isPayed ? p.fee : 0 });
         return total;
     }
 
@@ -57,7 +57,7 @@ const ConsultPlayerPage = () => {
         {
             field: "fee",
             headerName: "Quota",
-            valueGetter: (params) => { return params.row.fee },
+            valueGetter: (params) => { return params.row.isPayed ? params.row.fee : null },
             description: "Totale corrente: " + feeTotal,
             flex: 1
         },
@@ -102,7 +102,7 @@ const ConsultPlayerPage = () => {
                 "E' uno sponsor": p.isSponsor ? "SI" : "NO",
                 "Tariffa speciale": p.isSpecial ? "SI" : "NO",
                 "Ha pagato": p.isPayed ? "SI" : "NO",
-                "Quota": p.fee,
+                "Quota": p.isPayed ? p.fee : null,
                 "Squadra": p.team,
                 "Note": p.notes,
             }
