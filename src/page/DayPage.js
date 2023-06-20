@@ -30,8 +30,10 @@ const DayPage = () => {
 
     const fetchDay = async (day) => {
         let res = await dayActions.findDay(day);
-        if(res) {
-            setActivities(res.activities);
+        if(res?.activities) {
+            setActivities(res?.activities);
+        }else{
+            setActivities([]);
         }
     }
 
