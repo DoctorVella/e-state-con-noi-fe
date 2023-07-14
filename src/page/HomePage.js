@@ -44,15 +44,16 @@ const HomePage = () => {
                         <Grid item xs={12} md={8}>
                             <Card raised>
                                 <CardContent>
-                                    <Typography variant='h3'>Qui di seguito troverai i link per accedere alla nostra pagina Instagram e al video del campo</Typography>
+                                    <Typography variant='h5'>Qui di seguito troverai i link per accedere alla nostra pagina Instagram e al video del campo</Typography>
                                 </CardContent>
                                 <CardActions>
+                                    
                                     <Grid container>
-                                        <Grid item xs={6}> <a target='_blank' href='https://instagram.com/wong.srls'><InstagramIcon fontSize='large'></InstagramIcon></a>  </Grid>
-                                        <Grid item xs={6}> <a target='_blank' href='https://drive.google.com/drive/folders/16eI5yaT6_aOqJ7zzaRn74vId8KRCFAJW'> <MovieIcon fontSize='large'></MovieIcon> </a> </Grid>
+                                        <Grid item xs={6}> <a target='_blank' href='https://instagram.com/wong.srls'><InstagramIcon color='primary' fontSize='large'></InstagramIcon></a>  </Grid>
+                                        <Grid item xs={6}> <a target='_blank' href='https://drive.google.com/drive/folders/16eI5yaT6_aOqJ7zzaRn74vId8KRCFAJW'> <MovieIcon  color='primary' fontSize='large'></MovieIcon> </a> </Grid>
                                     </Grid>
+                                    
                                 </CardActions>
-                                <small>powered by WONG</small>
                             </Card>
                         </Grid>
                         <Grid item xs={0} md={2} />
@@ -76,16 +77,17 @@ const HomePage = () => {
                         </Grid>
                         <Grid item xs={12}>
                         <Card raised>
-                                <CardContent>
-                                    <Typography variant='h3'>Qui di seguito troverai i link per accedere alla nostra pagina Instagram e al video del campo</Typography>
+                        <CardContent>
+                                    <Typography variant='h5'>Qui di seguito troverai i link per accedere alla nostra pagina Instagram e al video del campo</Typography>
                                 </CardContent>
                                 <CardActions>
+                                    
                                     <Grid container>
-                                        <Grid item xs={6}> <a target='_blank' href='https://instagram.com/wong.srls'><InstagramIcon fontSize='large'></InstagramIcon></a>  </Grid>
-                                        <Grid item xs={6}> <a target='_blank' href='https://drive.google.com/drive/folders/16eI5yaT6_aOqJ7zzaRn74vId8KRCFAJW'> <MovieIcon fontSize='large'></MovieIcon> </a> </Grid>
+                                        <Grid item xs={6}> <a target='_blank' href='https://instagram.com/wong.srls'><InstagramIcon color='primary' fontSize='large'></InstagramIcon></a>  </Grid>
+                                        <Grid item xs={6}> <a target='_blank' href='https://drive.google.com/drive/folders/16eI5yaT6_aOqJ7zzaRn74vId8KRCFAJW'> <MovieIcon  color='primary' fontSize='large'></MovieIcon> </a> </Grid>
                                     </Grid>
+                                    
                                 </CardActions>
-                                <small>powered by WONG</small>
                             </Card>
                         </Grid>
                         <Grid item xs={12}>
