@@ -4,6 +4,8 @@ import { GlobalContext } from '../contexts/GlobalContext';
 import useAuthActions from '../services/useAuthActions';
 import HomeBackground from '../img/HomeBackground.png';
 import HomeBackgroundDesktop from '../img/HomeBackgroundDesktop.png';
+import MovieIcon from '@mui/icons-material/Movie';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const HomePage = () => {
     const { setOpenLoginModal, setOpenRegisterModal } = useContext(GlobalContext);
@@ -39,24 +41,18 @@ const HomePage = () => {
                         </Grid>
                         <Grid item xs={0} md={2} />
                         <Grid item xs={0} md={2} />
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={8}>
                             <Card raised>
                                 <CardContent>
-                                    <Typography variant='h3'>Non sei ancora registrato?</Typography>
+                                    <Typography variant='h3'>Qui di seguito troverai i link per accedere alla nostra pagina Instagram e al video del campo</Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Button onClick={() => { setOpenRegisterModal(true); }}>Registrati</Button>
+                                    <Grid container>
+                                        <Grid item xs={6}> <a target='_blank' href='https://instagram.com/wong.srls'><InstagramIcon fontSize='large'></InstagramIcon></a>  </Grid>
+                                        <Grid item xs={6}> <a target='_blank' href='https://drive.google.com/drive/folders/16eI5yaT6_aOqJ7zzaRn74vId8KRCFAJW'> <MovieIcon fontSize='large'></MovieIcon> </a> </Grid>
+                                    </Grid>
                                 </CardActions>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Card raised>
-                                <CardContent>
-                                    <Typography variant='h3'>Vuoi accedere alla tua area personale?</Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button onClick={() => { setOpenLoginModal(true); }}>Accedi</Button>
-                                </CardActions>
+                                <small>powered by WONG</small>
                             </Card>
                         </Grid>
                         <Grid item xs={0} md={2} />
@@ -79,23 +75,17 @@ const HomePage = () => {
                             </Box>
                         </Grid>
                         <Grid item xs={12}>
-                            <Card raised>
+                        <Card raised>
                                 <CardContent>
-                                    <Typography variant='h3'>Non sei ancora registrato?</Typography>
+                                    <Typography variant='h3'>Qui di seguito troverai i link per accedere alla nostra pagina Instagram e al video del campo</Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Button onClick={() => { setOpenRegisterModal(true); }}>Registrati</Button>
+                                    <Grid container>
+                                        <Grid item xs={6}> <a target='_blank' href='https://instagram.com/wong.srls'><InstagramIcon fontSize='large'></InstagramIcon></a>  </Grid>
+                                        <Grid item xs={6}> <a target='_blank' href='https://drive.google.com/drive/folders/16eI5yaT6_aOqJ7zzaRn74vId8KRCFAJW'> <MovieIcon fontSize='large'></MovieIcon> </a> </Grid>
+                                    </Grid>
                                 </CardActions>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Card raised>
-                                <CardContent>
-                                    <Typography variant='h3'>Vuoi accedere alla tua area personale?</Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button onClick={() => { setOpenLoginModal(true); }}>Accedi</Button>
-                                </CardActions>
+                                <small>powered by WONG</small>
                             </Card>
                         </Grid>
                         <Grid item xs={12}>
