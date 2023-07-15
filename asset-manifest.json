@@ -1,19 +1,20 @@
 {
   "files": {
     "main.css": "/e-state-con-noi-fe/static/css/main.7ca06f50.css",
-    "main.js": "/e-state-con-noi-fe/static/js/main.954aa9c6.js",
+    "main.js": "/e-state-con-noi-fe/static/js/main.9dc70c3c.js",
     "static/js/787.5ddaf079.chunk.js": "/e-state-con-noi-fe/static/js/787.5ddaf079.chunk.js",
     "static/media/HomeBackgroundDesktop.png": "/e-state-con-noi-fe/static/media/HomeBackgroundDesktop.3f165e48eb8ab0b5d7cb.png",
+    "static/media/LogoWong.png": "/e-state-con-noi-fe/static/media/LogoWong.8f7e243157c348dc976f.png",
     "static/media/IscrittoreBackgroundDesktop.png": "/e-state-con-noi-fe/static/media/IscrittoreBackgroundDesktop.b39fd67f04173929e64a.png",
     "static/media/IscrittoreBackground.png": "/e-state-con-noi-fe/static/media/IscrittoreBackground.39db3ff939d1148feacb.png",
     "static/media/HomeBackground.png": "/e-state-con-noi-fe/static/media/HomeBackground.526bfb8a37b17b76afa4.png",
     "index.html": "/e-state-con-noi-fe/index.html",
     "main.7ca06f50.css.map": "/e-state-con-noi-fe/static/css/main.7ca06f50.css.map",
-    "main.954aa9c6.js.map": "/e-state-con-noi-fe/static/js/main.954aa9c6.js.map",
+    "main.9dc70c3c.js.map": "/e-state-con-noi-fe/static/js/main.9dc70c3c.js.map",
     "787.5ddaf079.chunk.js.map": "/e-state-con-noi-fe/static/js/787.5ddaf079.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7ca06f50.css",
-    "static/js/main.954aa9c6.js"
+    "static/js/main.9dc70c3c.js"
   ]
 }
