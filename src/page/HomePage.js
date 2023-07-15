@@ -78,7 +78,7 @@ const HomePage = () => {
                                 Dalle <Typography variant='paragraph' color="white" display='inline'>ore 16.00</Typography> alle <Typography variant='paragraph' color="white" display='inline'>ore 20.00</Typography>.<br /><br />
                             </Box>
                         </Grid>
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <Card raised>
                                 <CardContent>
                                     <Typography variant='h3'>Non sei ancora registrato?</Typography>
@@ -87,8 +87,8 @@ const HomePage = () => {
                                     <Button onClick={() => { setOpenRegisterModal(true); }}>Registrati</Button>
                                 </CardActions>
                             </Card>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
+                        </Grid> */}
+                        {/* <Grid item xs={12} md={4}>
                             <Card raised>
                                 <CardContent>
                                     <Typography variant='h3'>Vuoi accedere alla tua area personale?</Typography>
@@ -97,7 +97,7 @@ const HomePage = () => {
                                     <Button onClick={() => { setOpenLoginModal(true); }}>Accedi</Button>
                                 </CardActions>
                             </Card>
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={12}>
                             <Box sx={{ p: 6 }} />
                         </Grid>
