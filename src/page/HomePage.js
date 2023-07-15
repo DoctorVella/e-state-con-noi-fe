@@ -4,6 +4,9 @@ import { GlobalContext } from '../contexts/GlobalContext';
 import useAuthActions from '../services/useAuthActions';
 import HomeBackground from '../img/HomeBackground.png';
 import HomeBackgroundDesktop from '../img/HomeBackgroundDesktop.png';
+import LogoWong from '../img/LogoWong.png';
+import MovieIcon from '@mui/icons-material/Movie';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const HomePage = () => {
     const { setOpenLoginModal, setOpenRegisterModal } = useContext(GlobalContext);
@@ -59,6 +62,28 @@ const HomePage = () => {
                                 </CardActions>
                             </Card>
                         </Grid> */}
+                        <Grid item xs={12} md={8}>
+                            <Card raised>
+                                <CardContent>
+                                    <Typography variant='h5'>Qui di seguito troverai i link per accedere alla nostra pagina Instagram e al video del campo</Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <Grid container>
+                                        <Grid item xs={6}>
+                                             <a target='_blank' rel='noreferer' href='https://instagram.com/wong.srls'>
+                                                {/* <InstagramIcon color='primary' fontSize='large'></InstagramIcon> */}
+                                                <img src={LogoWong} alt="Logo" style={{maxWidth:'130px'}}/>
+                                            </a> 
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <a target='_blank' rel='noreferer' href='https://drive.google.com/drive/folders/16eI5yaT6_aOqJ7zzaRn74vId8KRCFAJW'>
+                                                <MovieIcon  color='primary' fontSize='large' style={{fontSize:'90px'}} />  
+                                            </a> 
+                                        </Grid>
+                                    </Grid>
+                                </CardActions>
+                            </Card>
+                        </Grid>
                         <Grid item xs={0} md={2} />
                         <Grid item xs={12}>
                             <Box sx={{ p: 20 }} />
@@ -98,6 +123,28 @@ const HomePage = () => {
                                 </CardActions>
                             </Card>
                         </Grid> */}
+                        <Grid item xs={12}>
+                            <Card raised>
+                                <CardContent>
+                                    <Typography variant='h5'>Qui di seguito troverai i link per accedere alla nostra pagina Instagram e al video del campo</Typography>
+                                </CardContent>
+                                <CardActions>    
+                                    <Grid container>
+                                        <Grid item xs={6}>
+                                             <a target='_blank' rel='noreferer' href='https://instagram.com/wong.srls'>
+                                                {/* <InstagramIcon color='primary' fontSize='large'></InstagramIcon> */}
+                                                <img src={LogoWong} alt="Logo" style={{maxWidth:'130px'}}/>
+                                            </a> 
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <a target='_blank' rel='noreferer' href='https://drive.google.com/drive/folders/16eI5yaT6_aOqJ7zzaRn74vId8KRCFAJW'> 
+                                            <MovieIcon  color='primary' fontSize='large' style={{fontSize:'90px'}} /> 
+                                            </a> 
+                                        </Grid>
+                                    </Grid>
+                                </CardActions>
+                            </Card>
+                        </Grid>
                         <Grid item xs={12}>
                             <Box sx={{ p: 6 }} />
                         </Grid>
