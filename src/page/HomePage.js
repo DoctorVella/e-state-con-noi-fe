@@ -4,6 +4,7 @@ import { GlobalContext } from '../contexts/GlobalContext';
 import useAuthActions from '../services/useAuthActions';
 import HomeBackground from '../img/HomeBackground.png';
 import HomeBackgroundDesktop from '../img/HomeBackgroundDesktop.png';
+import LogoWong from '../img/LogoWong.png';
 import MovieIcon from '@mui/icons-material/Movie';
 import InstagramIcon from '@mui/icons-material/Instagram';
 
@@ -49,8 +50,17 @@ const HomePage = () => {
                                 <CardActions>
                                     
                                     <Grid container>
-                                        <Grid item xs={6}> <a target='_blank' href='https://instagram.com/wong.srls'><InstagramIcon color='primary' fontSize='large'></InstagramIcon></a>  </Grid>
-                                        <Grid item xs={6}> <a target='_blank' href='https://drive.google.com/drive/folders/16eI5yaT6_aOqJ7zzaRn74vId8KRCFAJW'> <MovieIcon  color='primary' fontSize='large'></MovieIcon> </a> </Grid>
+                                        <Grid item xs={6}>
+                                             <a target='_blank' rel='noreferer' href='https://instagram.com/wong.srls'>
+                                                {/* <InstagramIcon color='primary' fontSize='large'></InstagramIcon> */}
+                                                <img src={LogoWong} alt="Logo" style={{maxWidth:'130px'}}/>
+                                            </a> 
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <a target='_blank' rel='noreferer' href='https://drive.google.com/drive/folders/16eI5yaT6_aOqJ7zzaRn74vId8KRCFAJW'>
+                                                <MovieIcon  color='primary' fontSize='large' style={{fontSize:'90px'}} />  
+                                            </a> 
+                                        </Grid>
                                     </Grid>
                                     
                                 </CardActions>
@@ -82,9 +92,18 @@ const HomePage = () => {
                                 </CardContent>
                                 <CardActions>
                                     
-                                    <Grid container>
-                                        <Grid item xs={6}> <a target='_blank' href='https://instagram.com/wong.srls'><InstagramIcon color='primary' fontSize='large'></InstagramIcon></a>  </Grid>
-                                        <Grid item xs={6}> <a target='_blank' href='https://drive.google.com/drive/folders/16eI5yaT6_aOqJ7zzaRn74vId8KRCFAJW'> <MovieIcon  color='primary' fontSize='large'></MovieIcon> </a> </Grid>
+                                <Grid container>
+                                        <Grid item xs={6}>
+                                             <a target='_blank' rel='noreferer' href='https://instagram.com/wong.srls'>
+                                                {/* <InstagramIcon color='primary' fontSize='large'></InstagramIcon> */}
+                                                <img src={LogoWong} alt="Logo" style={{maxWidth:'130px'}}/>
+                                            </a> 
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <a target='_blank' rel='noreferer' href='https://drive.google.com/drive/folders/16eI5yaT6_aOqJ7zzaRn74vId8KRCFAJW'> 
+                                            <MovieIcon  color='primary' fontSize='large' style={{fontSize:'90px'}} /> 
+                                            </a> 
+                                        </Grid>
                                     </Grid>
                                     
                                 </CardActions>
