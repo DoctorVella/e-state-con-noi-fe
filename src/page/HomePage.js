@@ -39,7 +39,7 @@ const HomePage = () => {
                         </Grid>
                         <Grid item xs={0} md={2} />
                         <Grid item xs={0} md={2} />
-                        <Grid item xs={12} md={4}>
+                        {/* <Grid item xs={12} md={4}>
                             <Card raised>
                                 <CardContent>
                                     <Typography variant='h3'>Non sei ancora registrato?</Typography>
@@ -48,8 +48,8 @@ const HomePage = () => {
                                     <Button onClick={() => { setOpenRegisterModal(true); }}>Registrati</Button>
                                 </CardActions>
                             </Card>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
+                        </Grid> */}
+                        {/* <Grid item xs={12} md={4}>
                             <Card raised>
                                 <CardContent>
                                     <Typography variant='h3'>Vuoi accedere alla tua area personale?</Typography>
@@ -58,7 +58,7 @@ const HomePage = () => {
                                     <Button onClick={() => { setOpenLoginModal(true); }}>Accedi</Button>
                                 </CardActions>
                             </Card>
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={0} md={2} />
                         <Grid item xs={12}>
                             <Box sx={{ p: 20 }} />
