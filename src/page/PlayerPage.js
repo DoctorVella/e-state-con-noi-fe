@@ -65,6 +65,9 @@ const PlayerPage = ({ mode }) => {
 
     const fetchPlayers = async () => {
         let res = await playerActions.findPlayerAsAnimatore(_id);
+        if(!res[0].fee && res[0].weekNumber === 1) {
+            res[0].fee = DEFAULT_1W_STANDARD;
+        }
         reset(res[0]);
     }
 
