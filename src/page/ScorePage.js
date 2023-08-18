@@ -35,7 +35,7 @@ const ScorePage = () => {
     const fetchDayList = async () => {
         let res = await dayActions.findDayList();
         if(res) {
-            setDayList(res);
+            setDayList(res.sort((a,b) => Date.parse(a) - Date.parse(b)));
         }
     }
 
@@ -52,7 +52,7 @@ const ScorePage = () => {
         }else{
             let res = await dayActions.findDayTotal();
             if(res) {
-                setDayTotals(res);
+                setDayTotals(res.sort((a,b) => Date.parse(a.day) - Date.parse(b.day)));
             }
         }
     }
@@ -169,7 +169,7 @@ const ScorePage = () => {
                             <Grid item md={2}>
                                 <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(VERDI_TEAM_NAME), color: "white" }} label="Verdi:" />
                             </Grid>
-                            {activities.map(a => a.scoreList?.map(s => <Grid container item rowSpacing={1}>
+                            {activities.map(a => a.scoreList?.map(s => <Grid key={a.type + a.name + a.description} container item rowSpacing={1}>
                                 <Grid item md={4}>
                                     <Typography>{ACTIVITY_TYPES.get(a.type).label} - {a.name}</Typography>
                                     <Typography>
@@ -199,7 +199,7 @@ const ScorePage = () => {
                                 <Grid item md={2}><Typography>{singleDayTotals.get(VERDI_TEAM_NAME)}</Typography></Grid>
                                 <Grid item md={12}><div className="Divider" /></Grid>
                             </Grid> : null}
-                            {activities.map(a => <Grid container item rowSpacing={1}>
+                            {activities.map(a => <Grid key={a.type + a.name} container item rowSpacing={1}>
                                 <Grid item md={4}>
                                     <Typography>{ACTIVITY_TYPES.get(a.type).label} - {a.name}</Typography>
                                 </Grid>
@@ -210,7 +210,7 @@ const ScorePage = () => {
                                 <Grid item md={2} />
                             </Grid>)}
                         </Grid> : <Grid container item rowSpacing={1} xs={12}>
-                            {activities.map(a => a.scoreList?.map(s => <Grid key={s.description} container item rowSpacing={1} xs={12}>
+                            {activities.map(a => a.scoreList?.map(s => <Grid key={a.type + a.name + a.description} container item rowSpacing={1} xs={12}>
                                 <Grid item xs={12}>
                                     <Typography variant="h6">{ACTIVITY_TYPES.get(a.type).label}</Typography>
                                     <Typography variant="h6">{a.name}</Typography>
@@ -259,7 +259,7 @@ const ScorePage = () => {
                                 </Grid>
                                 <Grid item xs={12}><div className="Divider" /></Grid>
                             </Grid> : null}
-                            {activities.map(a => <Grid container item rowSpacing={1} xs={12}>
+                            {activities.map(a => <Grid key={a.type + a.name} container item rowSpacing={1} xs={12}>
                                 <Grid item xs={12}>
                                     <Typography variant="h6">{ACTIVITY_TYPES.get(a.type).label}</Typography>
                                     <Typography variant="h6">{a.name}</Typography>
@@ -291,12 +291,12 @@ const ScorePage = () => {
                             <Grid item md={2}>
                                 <Chip sx={{ mb: "10px", fontSize: "20px", backgroundColor: getTeamColors(VERDI_TEAM_NAME), color: "white" }} label="Verdi:" />
                             </Grid>
-                            {dayTotals.map(d => <Grid container item rowSpacing={1}>
+                            {dayTotals.map(d => <Grid key={d.day} container item rowSpacing={1}>
                                 {d.day === TOTAL_KEY ? <Grid item md={12}><div className="Divider" /></Grid> : null}
                                 <Grid item md={4}><Typography>{d.day === TOTAL_KEY ? "TOTALE" : formatDayDate(d.day)}</Typography></Grid>
                                 <Grid item md={2}>
                                     <Typography>{d.teamScores.find(ts => ts.team === AZZURRI_TEAM_NAME)?.score}</Typography>
-                                </Grid>
+                                </Grid> 
                                 <Grid item md={2}>
                                     <Typography>{d.teamScores.find(ts => ts.team === GIALLI_TEAM_NAME)?.score}</Typography>
                                 </Grid>
@@ -308,7 +308,7 @@ const ScorePage = () => {
                                 </Grid>
                             </Grid>)}
                         </Grid> : <Grid container item rowSpacing={1} xs={12}>
-                            {dayTotals.map(d => <Grid container item rowSpacing={1} xs={12}>
+                            {dayTotals.map(d => <Grid key={d.day} container item rowSpacing={1} xs={12}>
                                 {d.day === TOTAL_KEY ? <Grid item xs={12}><div className="Divider" /></Grid> : null}
                                 <Grid item xs={12}>
                                     <Typography variant="h6">{d.day === TOTAL_KEY ? "TOTALE" : formatDayDate(d.day)}</Typography>
