@@ -9,6 +9,7 @@ import { NOT_ASSIGNED_TEAM_NAME, TEAM_NAMES } from "../util/Constants";
 import AdminPageContainer from "../components/AdminPageContainer";
 
 const TeamPage = () => {
+    const ALLOW_PLAYER_NOT_PAYED_IN_TEAM = true;
     const playerActions = usePlayerActions();
     const teamActions = useTeamActions();
     const [teams, setTeams] = useState();
@@ -39,7 +40,7 @@ const TeamPage = () => {
             teamNames.forEach(name => {
                 teamMap.set(name, []);
             });
-            res.filter(p => p.isPayed).forEach(p => {
+            res.filter(p => ALLOW_PLAYER_NOT_PAYED_IN_TEAM || p.isPayed).forEach(p => {
                 if (p.team) {
                     setIsGenerateTeam(false);
                     teamMap.get(p.team).push(p);
